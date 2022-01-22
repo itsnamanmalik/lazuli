@@ -20,6 +20,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = ['https://*.codvensolutions.com']
+
 
 INSTALLED_APPS = [
     'jazzmin',
