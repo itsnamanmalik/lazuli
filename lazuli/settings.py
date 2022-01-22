@@ -269,3 +269,6 @@ JAZZMIN_UI_TWEAKS = {
     },
     "actions_sticky_top": False
 }
+
+
+CSRF_COOKIE_SECURE=True
