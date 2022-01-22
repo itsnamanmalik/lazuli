@@ -18,7 +18,7 @@ from import_export import resources
 admin.site.site_header='Lazuli'
 admin.site.site_title = 'Lazuli'
 
-# admin.site.unregister(TokenProxy)
+admin.site.unregister(TokenProxy)
 admin.site.unregister(StaffUser)
 admin.site.register(CustomUser, UserAdmin)
 
