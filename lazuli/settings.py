@@ -167,7 +167,7 @@ JAZZMIN_SETTINGS = {
     # Welcome text on the login screen
     "welcome_sign": "Welcome to the Lazuli Admin",
     # Copyright on the footer
-    "copyright": "Lazuli Enterprises Pvt Ltd",
+    "copyright": "Lazuli Enterprise Pvt Ltd",
     "user_avatar": "",
     #############
     # User Menu #
