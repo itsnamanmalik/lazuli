@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'website/style/main.css' %}" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'website/style/extras.css' %}" />
+
+    <title>Lazuli</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css" />
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <nav id="sidebar" class="p-3 pe-0 shadow-lg">
+        <div class="mt-3 mb-4 text-center">
+
+            <div class="bg-white d-inline-block rounded-circle">
+                <img src="{% static 'website/images/common/bee-logo.png' %}" class="img-fluid mb-0" style="height: 80px" alt="" />
+            </div>
+
+            <p class="fw-600 fs-4 text-white">Lazuli</p>
+
+            <button class="close-sidebar bg-transparent border-0">
+                <ion-icon size="large" name="close" class="text-white me-3"></ion-icon>
+            </button>
+        </div>
+
+        <div class="links d-flex-flex-column align-items-center mt-1">
+            <ul>
+                <li class="fs-5 mb-3">
+                    <a href="/">
+                        <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
+                            <ion-icon size="large" name="home-outline" class="me-3"></ion-icon>
+                            <span class="mt-1">Home</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="fs-5 mb-3">
+                    <a href="allStores.html">
+                        <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
+                            <ion-icon size="large" name="ellipsis-horizontal-circle-outline" class="me-3"></ion-icon>
+                            <span class="mt-1">About</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="fs-5 mb-3">
+                    <a href="stores.html">
+                        <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
+                            <ion-icon size="large" name="cart-outline" class="me-3"></ion-icon>
+                            <span class="mt-1">Stores</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="fs-5 mb-3">
+                    <a href="search_res.html">
+                        <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
+                            <ion-icon size="large" name="grid-outline" class="me-3"></ion-icon>
+                            <span class="mt-1">Categories</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="fs-5 mb-3">
+                    <a href="#">
+                        <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
+                            <ion-icon name="cash-outline" size="large" class="me-3"></ion-icon>
+                            <span class="">Coupens</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="fs-5 mb-3">
+                    <a href="allDeals.html">
+                        <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
+                            <ion-icon size="large" name="wallet-outline" class="me-3"></ion-icon>
+                            <span class="">Best Deals</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="fs-5 mb-3">
+                    <a href="#">
+                        <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
+                            <ion-icon size="large" name="information-circle-outline" class="me-3"></ion-icon>
+                            <span class="">How it Works?</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light pt-1 pb-1 sticky-div shadow" style="background-color: #ffc107">
+        <div class="container-fluid pb-1" style="background-color: #ffc107">
+            <button class="open-sidebar bg-transparent border-0">
+                <ion-icon name="menu-outline" class="text-white me-md-4 me-1 mt-2"></ion-icon>
+            </button>
+
+            <div class="logo-div">
+                <a class="navbar-brand" href="#" id="logo">
+                    <img src="{% static 'website/images/common/logo-bee.png' %}" class="img-fluid" />
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" id="search-icon" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+                <ion-icon size="large" name="search" id="view" class="text-white me-auto"></ion-icon>
+
+                <ion-icon size="large" name="close" id="hide" class="text-white me-auto d-none"></ion-icon>
+            </button>
+            <div class="collapse navbar-collapse me-search" id="navbarSupportedContent">
+                <form class="d-flex ms-auto mt-1 w-60 w-md-50 me-md-3">
+                    <input type="text" required class="form-control rounded-left border-0 fs-6"
+                        placeholder="Search a product, retailer..." />
+                    <button type="submit" class="input-group-text rounded-right bg-white border-0" id="basic-addon2">
+                        <ion-icon size="large" name="search-outline" class="text-blue"></ion-icon>
+                    </button>
+                </form>
+            </div>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item mx-md-3 mx-1">
+                    <a class="nav-link text-white" href="#" id="user">
+                        <ion-icon size="large" name="person" class="text-white"></ion-icon>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    {% block body %}
+
+    {% endblock body %}
+
+    <!-- footer -->
+    <footer class="wt">
+        <div class="container p-4 text-white">
+            <div class="row g-4">
+                <div class="col-md-3 col-sm-6 text-start mx-auto">
+                    <p class="fs-6 fw-400 mb-3">About Lazuli</p>
+
+                    <div class="links">
+                        <li class="small mb-2">
+                            <a href="#">About Us</a>
+                        </li>
+                        <li class="small mb-2">
+                            <a href="#">Contact Us</a>
+                        </li>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 text-start mx-auto">
+                    <p class="fs-6 fw-400 mb-3">Useful Reads</p>
+                    <div class="links">
+                        <li class="small mb-2"><a href="#">Terms and Conditions</a></li>
+                        <li class="small mb-2"><a href="#">Privacy Policy</a></li>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 text-start mx-auto">
+                    <p class="fs-6 fw-400 mb-3">Special Pages</p>
+                    <div class="links">
+                        <li class="small mb-2"><a href="#">Refer and Earn</a></li>
+
+                        <li class="small mb-2"><a href="#">Become Our Partner</a></li>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 text-start mx-auto">
+                    <p class="fs-6 fw-400 mb-3">Download Our App</p>
+                    <div class="links">
+                        <li class="small mb-2">
+                            <a href="#">
+                                <img src="{% static 'website/images/common/googleplay.png' %}" alt="" />
+                            </a>
+                        </li>
+                    </div>
+
+                    <p class="fs-6 fw-400 mb-3 mt-2">Follow Us</p>
+                    <div class="links d-flex justify-content-start">
+                        <li class="small mb-2 me-2 foot-icon">
+                            <a href="#">
+                                <ion-icon name="logo-instagram" size="large"></ion-icon>
+                            </a>
+                        </li>
+                        <li class="small mb-2 me-2 foot-icon">
+                            <a href="#">
+                                <ion-icon name="logo-facebook" size="large"></ion-icon>
+                            </a>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="bg-extra-dark px-5 py-2">
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="small fw-300 text-white text-center pb-0 my-1">
+                    Developed By
+                    <a href="#" class="text-warning fw-500">Codven Solutions Pvt. Ltd.</a>
+                </h6>
+            </div>
+            <div class="col-md-6">
+                <h6 class="small fw-300 text-white text-center pb-0 my-1">
+                    Copyright &copy; 2022 - Lazuli Enterprise Pvt. Ltd.
+                </h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Icons Package -->
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script src="{% static 'website/javascript/app.js' %}"></script>
+</body>
+
+</html>

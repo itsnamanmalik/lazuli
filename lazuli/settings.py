@@ -161,7 +161,7 @@ JAZZMIN_SETTINGS = {
     "site_header": "Lazuli",
     "site_brand": "Lazuli",
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "images/common/logo.png",
+    "site_logo": "website/images/common/logo.png",
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
     "site_icon": None,
     # Welcome text on the login screen

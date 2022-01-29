@@ -1,0 +1,98 @@
+:root {
+    --main-color: #fed700;
+    --sec-color: #ffab4c;
+    --link-color: #212529;
+    --bg-extra-dark: #343a40;
+  }
+  
+  #results .card-body img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .md-icon {
+    font-size: 19px !important;
+  }
+  
+  .hid-div-btn {
+    display: none;
+  }
+  
+  /* Navs and tabs */
+  .nav-tabs {
+    min-width: 500px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  
+  li.nav-item a {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--link-color);
+  }
+  
+  li.nav-item a:hover {
+    color: #212529;
+  }
+  
+  li.nav-item.active a {
+    color: #fff !important;
+  }
+  
+  li.nav-item.active {
+    border-radius: 4px;
+    transition: all 350ms ease;
+    background-color: var(--bg-extra-dark);
+  }
+  
+  .navs-tabs-div-img {
+    margin: auto;
+    max-height: 200px;
+    max-width: 200px;
+  }
+  
+  /* hr tag styling */
+  hr {
+    border: 2px double #444;
+    border-style: none none dotted;
+    color: #fff;
+    width: 98%;
+    margin: 30px auto;
+    background-color: #fff;
+  }
+  
+  /* Active div */
+  .div-active a {
+    transition: all 300ms ease;
+  }
+  .div-active a.active {
+    color: #fff;
+    font-weight: 700;
+    border-radius: 4px;
+    background-color: var(--sec-color);
+  }
+  
+  .show-divs {
+    transition: all 400ms ease;
+  }
+  
+  @media (max-width: 768px) {
+    .hid-div-sm {
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    .hid-div-btn {
+      display: block !important;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .sm-overflow-scroll {
+      overflow-x: scroll;
+      min-width: 350px;
+    }
+  }
+  

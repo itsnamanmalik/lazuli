@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<!-- Section Carousel -->
+<div id="carousel" class="px-3 py-2">
+    <div class="main-carousel">
+        
+        {% for slider in home_sliders %}
+        
+        <div class="carousel-cell m-2">
+            <a href="{{slider.action_url}}">
+                <img src="{{slider.image.url}}" class="img-fluid rounded-0 car-image" alt="" />
+            </a>
+        </div>
+
+
+        {% endfor %}
+        
+
+    </div>
+</div>
+
+<!-- Categories section -->
+<section id="categories">
+    <div class="p-4 p-lg-5">
+        <div class="d-flex w-100 fw-500 p-2 rounded-left-lg">
+            <ion-icon size="large" name="apps" class="me-2 text-dark my-auto text-dark"></ion-icon>
+            <h2 class="text-dark wt my-auto fw-500 mb-1">Top Categories</h2>
+        </div>
+
+        <div id="carousel" class="px-3 py-2">
+            <div class="carousel-brands">
+            
+                {% for category in top_categories %}
+                <a href="#">
+                    <div class="carousel-cell m-2 mx-3">
+                        <div class="item bg-white p-3 text-center shadow-sm rounded-md border icon-div">
+                            <p class="fw-600 mb-3 fs-5">{{category.name}}</p>
+                            <img src="{{category.image.url}}" class="img-fluid rounded-3" alt="" />
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+
+            
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="#" class="btn btn-dark rounded-pill px-4 shadow">View all</a>
+        </div>
+    </div>
+</section>
+
+<!-- Top Brands -->
+<section id="brands" class="bg-sec">
+    <div class="p-lg-5 p-4">
+        <div class="d-flex w-100 fw-500 p-2 rounded-left-lg justify-content-center">
+            <ion-icon size="large" name="pricetags" class="me-2 text-dark my-auto text-dark"></ion-icon>
+            <h1 class="text-dark wt mb-2 fw-500">Top Brands</h1>
+        </div>
+
+        <div id="carousel" class="px-3 py-2">
+            <div class="carousel-brands">
+
+                {% for brand in top_brands %}
+                
+                <div class="carousel-cell m-2 mx-3">
+                    <a href="#">
+                        <div class="item bg-white p-3 text-center shadow-sm rounded-md border brand-div">
+                            <h4 class="fw-600 mb-3 wt">{{brand.name}}</h4>
+                            <img src="{{brand.logo.url}}" class="img-fluid rounded-3" alt="" />
+                            <h6 class="fw-500 mt-3">{{brand.tagline}}</h6>
+                        </div>
+                    </a>
+                </div>
+
+                {% endfor %}
+
+                        
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="#" class="btn btn-dark rounded-pill px-4 shadow">View all</a>
+        </div>
+    </div>
+</section>
+
+<!-- Top Deals -->
+<section id="deals">
+    <div class="p-lg-5 p-4">
+        <div class="d-flex w-100 fw-500 p-2 rounded-left-lg">
+            <ion-icon size="large" name="flame" class="me-2 text-dark mt-2"></ion-icon>
+            <h1 class="text-dark wt mb-3 fw-500 text-start">
+                Hot Deals & Coupens
+            </h1>
+        </div>
+        <!-- offers grid -->
+        <div class="container pt-0 mb-4">
+            <div class="row text-center g-4">
+
+                {% for deal in top_deals %}
+
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card text-dark shadow-sm">
+                        <div class="card-body text-center">
+                            <h3 class="card-title mb-3 wt fw-500">{{deal.title}}</h3>
+
+                            <img src="{{deal.store.logo.url}}" class="img-fluid mb-3 rounded-3" style="height: 200px"
+                                alt="{{deal.store.name}}" />
+
+                            <a href="#" class="btn btn-dark w-75">
+                                {% if deal.coupon_code  %}
+                                Code: {{deal.coupon_code}}
+                                {% else %}
+                                Click to grab deal
+                                {% endif %}
+                                <span class="ms-1 deal-icon">
+                                    <ion-icon name="paper-plane"></ion-icon>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                {% endfor %}
+
+                
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="#" class="btn btn-dark rounded-pill px-4 shadow">View all</a>
+        </div>
+    </div>
+</section>
+
+<!-- Trending Stores -->
+<section id="stores" class="bg-sec">
+    <div class="p-lg-5 p-4 text-center">
+        <div class="d-flex w-100 fw-500 p-2 rounded-left-lg justify-content-center">
+            <ion-icon size="large" name="cart" class="me-2 text-dark my-auto text-dark"></ion-icon>
+            <h1 class="text-dark wt mb-2 fw-500">Trending Stores</h1>
+        </div>
+
+        <div id="carousel" class="px-3 py-2">
+            <div class="carousel">
+
+
+                {% for store in top_stores %}
+                
+                <div class="carousel-cell m-2 mx-3">
+                    <div class="item bg-white p-3 text-center shadow-sm rounded-md border brand-div">
+                        <h4 class="fw-600 mb-3 wt">{{store.name}}</h4>
+                        <img src="{{store.logo.url}}" class="img-fluid rounded-3" alt="" />
+
+                        <h6 class="fw-600 my-3">{{store.tagline}}</h6>
+
+                        <button class="btn btn-dark fix-bg shadow-sm w-100 p-2">
+                            Cashback: {{store.cashback_type}} {{store.cashback_percent}}%
+                        </button>
+                    </div>
+                </div>
+
+                {% endfor %}
+                
+                
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="#" class="btn btn-dark rounded-pill px-4 shadow">View all</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+    <div class="container p-lg-5 p-4 text-center">
+        <div class="d-flex w-100 fw-500 p-2 rounded-left-lg justify-content-center">
+            <ion-icon size="large" name="people" class="me-2 text-dark mt-2"></ion-icon>
+            <h1 class="text-dark wt mb-3 fw-500 text-center">
+                What Our Customers Say!
+            </h1>
+        </div>
+
+        <div id="carousel" class="px-3 py-2">
+            <div class="carousel">
+                <div class="carousel-cell m-2 mx-3">
+                    <div class="card bg-white">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/men/13.jpg" class="rounded-circle mb-3"
+                                alt="person1" />
+                            <h3 class="card-title mb-3 text-dark wt">Erwin Smith</h3>
+                            <p class="card-text">
+                                Using since 5 years and I do all online purchase via CashPro
+                                for cashback each time. I got more than Rs. 10000 and I
+                                strongly recommend this cashback site to all for extra
+                                savings on every purchase.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-cell m-2 mx-3">
+                    <div class="card bg-white">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/men/1.jpg" class="rounded-circle mb-3"
+                                alt="person1" />
+                            <h3 class="card-title mb-3 text-dark wt">Hayata Hayamo</h3>
+                            <p class="card-text">
+                                Using since 5 years and I do all online purchase via CashPro
+                                for cashback each time. I got more than Rs. 10000 and I
+                                strongly recommend this cashback site to all for extra
+                                savings on every purchase.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-cell m-2 mx-3">
+                    <div class="card bg-white">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/men/2.jpg" class="rounded-circle mb-3"
+                                alt="person1" />
+                            <h3 class="card-title mb-3 text-dark wt">Hachiman</h3>
+                            <p class="card-text">
+                                CashPro.com is a genuine & professional cashback site. I use
+                                for recharge cashback, Amazon cashback and Flipkart
+                                cashback. India's top cashback site!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-cell m-2 mx-3">
+                    <div class="card bg-white">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/women/1.jpg" class="rounded-circle mb-3"
+                                alt="person1" />
+                            <h3 class="card-title mb-3 text-dark wt">Levi</h3>
+                            <p class="card-text">
+                                It's been two year, I am using CashPro. I have the best
+                                experience ever with this earning/deal website. CashPro
+                                helped me in my savings and infact I have earned extra
+                                income too.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-cell m-2 mx-3">
+                    <div class="card bg-white">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/women/5.jpg" class="rounded-circle mb-3"
+                                alt="person1" />
+                            <h3 class="card-title mb-3 text-dark wt">Jean Grey</h3>
+                            <p class="card-text">
+                                It was a great experience with CashPro. I earned a lot using
+                                coupons and cashback from this cashback app. CashPro is the
+                                first ever app which provides India's best deal at nominal
+                                price plus lots of cashback.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-cell m-2 mx-3">
+                    <div class="card bg-white">
+                        <div class="card-body text-center">
+                            <img src="https://randomuser.me/api/portraits/men/10.jpg" class="rounded-circle mb-3"
+                                alt="person1" />
+                            <h3 class="card-title mb-3 text-dark wt">Neo Collin</h3>
+                            <p class="card-text">
+                                Awesome App. Very innovative. Able to find good deals in one
+                                place and get rewarded for placing orders. Name of Mr Ratan
+                                Tata, the great, implies good management and team. Kudos to
+                                CashPro and team
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}

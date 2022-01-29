@@ -1,0 +1,390 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --main-color: #ffc107;
+  --sec-color: #ffab4c;
+  --link-color: #212529;
+  --bg-extra-dark: #343a40;
+}
+
+/* New commit from new Laptop */
+
+input,
+button,
+input:hover,
+button:hover {
+  box-shadow: none !important;
+}
+
+body {
+  height: 100vh;
+  position: relative;
+  background-color: #f9f9f9;
+  font-family: "Quicksand", sans-serif;
+}
+
+body::before {
+  content: "";
+  height: 70px;
+  display: block;
+}
+
+nav {
+  background-color: var(--main-color) !important;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: var(--link-color);
+}
+
+.wt {
+  font-family: "Montserrat", "Quicksand", sans-serif;
+}
+
+.rounded-md {
+  border-radius: 8px !important;
+}
+
+.sticky-div {
+  top: 0px;
+  height: 70px;
+  z-index: 5;
+  width: 100%;
+  position: fixed;
+}
+
+.text-blue {
+  color: var(--link-color);
+}
+
+.bg-extra-dark {
+  background-color: var(--link-color);
+}
+
+.bg-blue {
+  background-color: var(--link-color);
+}
+
+.bg-sec {
+  background-color: #f6d365;
+  /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
+}
+
+.text-dark {
+  color: var(--link-color);
+}
+
+.bg-dark,
+.fix-bg {
+  background-color: var(--link-color) !important;
+}
+
+.purp {
+  color: #511281 !important;
+}
+
+.green {
+  color: #01937c !important;
+}
+
+.rred {
+  color: #ff0000 !important;
+}
+
+.red {
+  color: #ff5c58 !important;
+}
+
+.skin {
+  color: #ff865e !important;
+}
+
+.fw-300 {
+  font-weight: 300;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.rounded-left {
+  border-radius: 4px 0 0 4px !important;
+}
+
+.rounded-left-lg {
+  border-radius: 8px 0 0 8px !important;
+}
+
+.rounded-right {
+  border-radius: 0 4px 4px 0 !important;
+}
+
+/* Navbar stylings */
+#search-icon {
+  position: absolute;
+  right: 20px;
+  top: 14px;
+  border: none;
+}
+
+#user {
+  position: absolute;
+  right: 80px;
+  top: 10px;
+}
+
+#logo {
+  position: fixed;
+  left: 80px;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+.me-search {
+  margin-right: 80px;
+}
+
+.logo-div img {
+  position: fixed;
+  top: 0;
+  left: 70px;
+  height: 70px !important;
+  width: 150px !important;
+}
+
+/* Sidebar styling */
+
+.close-sidebar {
+  top: 20px;
+  right: 0px;
+  position: absolute !important;
+}
+
+.open-sidebar ion-icon {
+  font-size: 3rem !important;
+}
+
+#sidebar {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  height: 100vh !important;
+  width: 290px;
+  position: fixed;
+  overflow-y: auto;
+  background-color: var(--link-color) !important;
+  /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
+  /* background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%); */
+  transform: translateX(-100%);
+  transition: transform 500ms ease;
+}
+
+.show-sidebar #sidebar {
+  transform: translateX(0);
+}
+
+#sidebar ul li {
+  width: 100%;
+  list-style: none;
+}
+
+#sidebar a {
+  color: #fff;
+  border: none !important;
+  text-decoration: none !important;
+}
+
+#sidebar a div:hover {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+/* Carousel cell animation */
+#categories .carousel-cell div {
+  margin-left: 1rem;
+  transition: transform 400ms ease-in-out;
+}
+
+#categories .carousel-cell div:hover {
+  transform: scale(1.1);
+}
+
+/* Hero section */
+.car-image {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.main-carousel .flickity-page-dots {
+  bottom: -22px;
+}
+/* dots are lines */
+.main-carousel .flickity-page-dots .dot {
+  height: 4px;
+  width: 40px;
+  margin: 0;
+  border-radius: 0;
+}
+
+/* Categores section */
+
+.icon-div img {
+  width: 140px;
+  height: 140px;
+  margin: auto;
+}
+
+.icon-div h3 {
+  color: #334756;
+  text-transform: uppercase;
+}
+
+/* Brands Styling */
+.brand-div img {
+  height: 180px;
+  width: 180px;
+}
+
+#brands .brand-div {
+  width: 300px;
+}
+
+.carousel-brands .carousel-cell {
+  margin: 10px !important;
+}
+
+.carousel-brands .flickity-prev-next-button.previous {
+  left: -40px;
+}
+
+.carousel-brands .flickity-prev-next-button.next {
+  right: -40px;
+}
+
+.carousel-brands .flickity-button {
+  background: #333;
+}
+
+.carousel-brands .flickity-button:hover {
+  background: var(--link-color);
+}
+
+.carousel-brands .flickity-prev-next-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.carousel-brands .flickity-button-icon {
+  fill: white;
+}
+
+/* testimonails */
+#testimonials .carousel .carousel-cell {
+  width: 50%;
+}
+
+/* deals */
+.deal-icon {
+  font-size: 1.1rem;
+  display: inline-block;
+}
+
+#deals .card-text {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Stores */
+#stores .carousel-cell {
+  width: 30%;
+}
+
+.carousel .flickity-prev-next-button.previous {
+  left: -40px;
+}
+
+.carousel .flickity-prev-next-button.next {
+  right: -40px;
+}
+
+/* Footer styles */
+footer {
+  background-color: var(--bg-extra-dark);
+}
+
+footer li {
+  list-style: none;
+}
+footer .links a {
+  font-weight: 300 !important;
+  color: #fff !important;
+}
+
+footer .links a:hover {
+  color: #ff865e !important;
+}
+
+footer p {
+  padding-bottom: 6px;
+  display: inline-block;
+  border-bottom: 2px solid #fff;
+}
+
+@media (max-width: 990px) {
+  .w-60 {
+    width: 100% !important;
+  }
+  .me-search {
+    margin-right: 0px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .w-50,
+  .w-60 {
+    width: 100% !important;
+  }
+
+  .car-image {
+    height: 40vh;
+  }
+
+  .carousel-cell {
+    width: 100% !important;
+  }
+
+  #stores .carousel-cell {
+    width: 100%;
+  }
+
+  #brands .brand-div {
+    width: 100% !important;
+  }
+
+  #testimonials .carousel .carousel-cell {
+    width: 100%;
+  }
+}
