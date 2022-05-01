@@ -8,7 +8,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #DEV
-# STATIC_DIR = os.path.join(BASE_DIR,'static')
+STATIC_DIR = os.path.join(BASE_DIR,'static')
 #DEV
 
 
@@ -85,8 +85,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'lazuli',
         'USER': 'root',
-        'PASSWORD': '#BakersBrisk#786BB',
-        # 'PASSWORD':'', #DEV
+        # 'PASSWORD': '#BakersBrisk#786BB',
+        'PASSWORD':'', #DEV
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS':{
@@ -128,12 +128,12 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') #DEPLOY
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static') #DEPLOY
 
 # DEV
-# STATICFILES_DIRS = [
-#     STATIC_DIR,
-# ]
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
 
 CORS_ORIGIN_ALLOW_ALL = True
 

@@ -26,5 +26,32 @@ class Index(View):
         return render(request,'index.html',context)
     
     
+class Brands(View):
+    def get(self, request):
+        all_brands = Brand.objects.all()
+        count = all_brands.count()
+        context = {"all_brands": all_brands,"count": count}
+        return render(request,'all-brands.html',context)
+    
+    
+class Deals(View):
+    def get(self, request):
+        all_deals = Brand.objects.all()
+        count = all_deals.count()
+        context = {"all_deals": all_deals,"count": count}
+        return render(request,'all-deals.html',context)
+    
+    
+    
+    
+        
+class Stores(View):
+    def get(self, request):
+        all_stores = Store.objects.all()
+        count = all_stores.count()
+        context = {"all_stores": all_stores,"count": count}
+        return render(request,'all-strores.html',context)
+    
+    
     
     

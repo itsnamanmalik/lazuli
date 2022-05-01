@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<section id="results">
+    <div class="container p-2 p-lg-3">
+        <div class="text-center mb-md-4 my-3">
+            <h2 class="text-center wt text-dark fw-600">All Stores</h2>
+            <p class="lead text-secondary fw-500">{{count}} Results</p>
+        </div>
+
+        <div class="row g-4">
+            {% for deal in all_deals %}
+
+            <div class="col-lg-3 col-md-4 hov-trans">
+                <div class="card text-dark shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title mb-3 wt fw-500">{{deal.title}}</h3>
+
+                        <img src="{{deal.store.logo.url}}" class="img-fluid mb-3 rounded-3" style="height: 200px"
+                            alt="{{deal.store.name}}" />
+
+                        <a href="#" class="btn btn-dark w-75">
+                            {% if deal.coupon_code  %}
+                            Code: {{deal.coupon_code}}
+                            {% else %}
+                            Click to grab deal
+                            {% endif %}
+                            <span class="ms-1 deal-icon">
+                                <ion-icon name="paper-plane"></ion-icon>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            
+            {% endfor %}
+        </div>
+
+     
+        <!-- Pagination -->
+        <div class="mt-5 bg-white">
+            <nav aria-label="Page navigation example" style="background-color: #f9f9f9">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">«Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">Next»</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}
