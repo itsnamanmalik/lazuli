@@ -36,7 +36,7 @@ class Brands(View):
     
 class Deals(View):
     def get(self, request):
-        all_deals = Brand.objects.all()
+        all_deals = DealsCoupon.objects.all()
         count = all_deals.count()
         context = {"all_deals": all_deals,"count": count}
         return render(request,'all-deals.html',context)
@@ -50,7 +50,7 @@ class Stores(View):
         all_stores = Store.objects.all()
         count = all_stores.count()
         context = {"all_stores": all_stores,"count": count}
-        return render(request,'all-strores.html',context)
+        return render(request,'all-stores.html',context)
     
     
     
