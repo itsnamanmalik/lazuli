@@ -41,9 +41,7 @@ class Deals(View):
         context = {"all_deals": all_deals,"count": count}
         return render(request,'all-deals.html',context)
     
-    
-    
-    
+       
         
 class Stores(View):
     def get(self, request):
