@@ -9,6 +9,7 @@ class Vendor(models.Model):
     address = models.TextField(null=False, blank=False, max_length=150)
     wallet = models.FloatField(null=False, blank=False, default=0)
     gst_number = models.CharField(blank=True,null=True,max_length=50)
+    commission_percentage = models.FloatField(null=False, blank=False, default=0)
     notification_id = models.CharField(max_length=500, default="",null=False, blank=True)
     date_joined	= models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_login = models.DateTimeField(auto_now=True,null=True, blank=True)

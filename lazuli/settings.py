@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'api.affiliate',
     'api.users',
     'api.vendors',
+    'api.cashback',
     'import_export',
     'django_cleanup',
 ]

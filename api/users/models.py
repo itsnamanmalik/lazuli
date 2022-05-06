@@ -10,6 +10,7 @@ class User(models.Model):
     user_id = models.CharField(max_length=20, null=False, blank=False, unique=True)
     referral_id = models.CharField(max_length=20, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
+    cashback_level = models.ForeignKey(to='cashback.CashbackLevel',on_delete=models.SET_NULL, null=True, blank=True)
     notification_id = models.CharField(max_length=500, default="",null=False, blank=True)
     date_joined	= models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_login = models.DateTimeField(auto_now=True,null=True, blank=True)

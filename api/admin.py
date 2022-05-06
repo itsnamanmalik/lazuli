@@ -6,6 +6,7 @@ from api.affiliate.models import *
 from api.users.models import *
 from api.vendors.models import *
 from api.customer_requests.models import *
+from api.cashback.models import *
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User as StaffUser
 from api.models import CustomUser
@@ -37,6 +38,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('name','email','phone','wallet','date_joined','last_login')
     search_fields = ('name','email','phone',)
     list_filter = ('date_of_birth',)
+
 
 
 @admin.register(UserWalletTransaction)
@@ -91,4 +93,11 @@ class VendorSaleAdmin(admin.ModelAdmin):
         "user": 6,
     }
     
+    
+
+@admin.register(CashbackLevel)
+class CashbackLevelAdmin(admin.ModelAdmin):
+    list_display = ('name','percentage','fixed_distribution_percentage','ratio_distribution_percentage','max_cashback')
+    search_fields = ('name',)
+
 

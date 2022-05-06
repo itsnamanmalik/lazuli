@@ -19,7 +19,7 @@ $('.main-carousel').flickity({
     draggable: true,
     groupCells: true,
     pageDots: false,
-     wrapAround: true,
+    wrapAround: true,
   });
   
   $('.carousel-brands').flickity({
@@ -30,7 +30,7 @@ $('.main-carousel').flickity({
     groupCells: true,
     pageDots: false,
     draggable: true,
-     wrapAround: true,
+    wrapAround: true,
   });
   
   $('.nabs-tabs-carousel').flickity({
@@ -41,14 +41,14 @@ $('.main-carousel').flickity({
     groupCells: true,
     pageDots: true,
     draggable: true,
-     wrapAround: true,
+    wrapAround: true,
   });
   
   $('.stores').flickity({
     // options
     draggable: true,
     cellAlign: 'left',
-     wrapAround: true,
+    wrapAround: true,
   });
   
   const view = document.querySelector('#view');
