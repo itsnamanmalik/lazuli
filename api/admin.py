@@ -33,8 +33,13 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Brand)
 
+
+class UserCashbackLevelAdmin(admin.StackedInline):
+    model = UserCashbackLevel    
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
+    inlines = [UserCashbackLevelAdmin]
     list_display = ('name','email','phone','wallet','date_joined','last_login')
     search_fields = ('name','email','phone',)
     list_filter = ('date_of_birth',)
@@ -63,6 +68,8 @@ class ProductPriceAdmin(admin.StackedInline):
 
 class ProductImageAdmin(admin.StackedInline):
     model = ProductImage
+
+
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):

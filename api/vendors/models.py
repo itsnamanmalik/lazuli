@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
 
 class Vendor(models.Model):
     name = models.CharField(blank=True,null=True,max_length=50)
@@ -24,6 +28,17 @@ class Vendor(models.Model):
 class VendorSale(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, null=True, blank=True)
     vendor = models.ForeignKey(to='vendors.Vendor', on_delete=models.SET_NULL, null=True, blank=True)
+    
+    
+@receiver(post_save, sender=VendorSale)
+def update_cashback_level(sender, instance, created, **kwargs):
+    if created:
+        # UPDATE CASHBACK LEVELS OF ALL USERS ACCORDINGLY
+        pass
+
+
+    
+    
     
 # TRANSACTION_TYPE = (
 #     ("debited", "debited"), 

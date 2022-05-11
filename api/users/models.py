@@ -27,6 +27,13 @@ TRANSACTION_TYPE = (
     ("credited", "credited"), 
 )
 
+class UserCashbackLevel(models.Model):
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    cashback_level = models.ForeignKey(to='cashback.CashbackLevel', on_delete=models.CASCADE)
+    
+    class Meta:
+        unique_together = ('user', 'cashback_level',)
+    
 
 class UserWalletTransaction(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='transactions')
