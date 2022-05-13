@@ -1,6 +1,5 @@
 from django.db import models
-from datetime import datetime  
-from api.vendors.models import VendorSale
+from datetime import datetime
 
 
 class User(models.Model):
