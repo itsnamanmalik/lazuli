@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime  
+from api.vendors.models import VendorSale
 
 
 class User(models.Model):
@@ -28,10 +29,10 @@ TRANSACTION_TYPE = (
 
 class UserCashbackLevel(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    sale = models.ForeignKey(to='vendors.VendorSale', on_delete=models.CASCADE)
     cashback_level = models.ForeignKey(to='cashback.CashbackLevel', on_delete=models.CASCADE)
-    
     class Meta:
-        unique_together = ('user', 'cashback_level',)
+        unique_together = ('user','sale','cashback_level',)
     
 
 class UserWalletTransaction(models.Model):

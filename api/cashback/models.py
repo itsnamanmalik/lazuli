@@ -1,9 +1,11 @@
 from django.db import models
+from pkg_resources import require
 
 
 class CashbackLevel(models.Model):
     name = models.CharField(blank=True,null=True,max_length=50)
     percentage = models.PositiveIntegerField(null=False, blank=False)
+    required_minimum_after_sale_total = models.PositiveIntegerField(null=False, blank=False,default=0)
     fixed_distribution_percentage = models.PositiveIntegerField(null=False, blank=False)
     ratio_distribution_percentage = models.PositiveIntegerField(null=False, blank=False)
     max_cashback = models.PositiveIntegerField(null=False, blank=False)

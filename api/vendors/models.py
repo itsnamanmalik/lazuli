@@ -1,6 +1,11 @@
+from functools import total_ordering
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from api.users.models import User,UserCashbackLevel
+from api.cashback.models import CashbackLevel
+from django.db.models import F
+from django.db import IntegrityError
 
 
 
@@ -28,16 +33,26 @@ class Vendor(models.Model):
 class VendorSale(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, null=True, blank=True)
     vendor = models.ForeignKey(to='vendors.Vendor', on_delete=models.SET_NULL, null=True, blank=True)
+    total_amount = models.FloatField(null=False,blank=False,default=0)
+    after_sale_total = models.FloatField(null=False,blank=False,default=0)
+    date_created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
+    last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     
     
 @receiver(post_save, sender=VendorSale)
 def update_cashback_level(sender, instance, created, **kwargs):
     if created:
         # UPDATE CASHBACK LEVELS OF ALL USERS ACCORDINGLY
-        pass
-
-
-    
+        try:
+            VendorSale.objects.filter(date_created__lt=instance.date_created).update(after_sale_total=F('after_sale_total')+instance.total_amount)    
+        except IntegrityError as e:
+            pass
+    else:
+        all_cashback_levels = CashbackLevel.objects.all()
+        for cashback_level in all_cashback_levels:
+            if instance.after_sale_total >= cashback_level.required_minimum_after_sale_total:
+                user_cashback_level = UserCashbackLevel(user=instance.user,sale=instance,cashback_level=cashback_level)
+                user_cashback_level.save()
     
     
 # TRANSACTION_TYPE = (
