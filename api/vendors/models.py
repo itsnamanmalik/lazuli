@@ -6,7 +6,7 @@ from api.users.models import UserCashbackLevel
 from api.cashback.models import CashbackLevel
 from django.db.models import F
 from django.db import IntegrityError
-
+import threading
 
 
 class Vendor(models.Model):
@@ -35,26 +35,35 @@ class VendorSale(models.Model):
     vendor = models.ForeignKey(to='vendors.Vendor', on_delete=models.SET_NULL, null=True, blank=True)
     total_amount = models.FloatField(null=False,blank=False,default=0)
     after_sale_total = models.FloatField(null=False,blank=False,default=0)
+    cashback_credited = models.BooleanField(null=False,blank=False,default=False)
     date_created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     
     
-@receiver(post_save, sender=VendorSale)
-def update_cashback_level(sender, instance, created, **kwargs):
+    
+
+def update_cashback(created,instance):
     if created:
-        # UPDATE CASHBACK LEVELS OF ALL USERS ACCORDINGLY
-        try:
-            VendorSale.objects.filter(date_created__lt=instance.date_created).update(after_sale_total=F('after_sale_total')+instance.total_amount)    
-        except IntegrityError as e:
-            pass
+        before_vendors = VendorSale.objects.filter(date_created__lt=instance.date_created)
+        for vendor in before_vendors:
+            vendor.after_sale_total = vendor.after_sale_total+instance.total_amount
+            vendor.save()
     else:
         all_cashback_levels = CashbackLevel.objects.all()
         for cashback_level in all_cashback_levels:
             if instance.after_sale_total >= cashback_level.required_minimum_after_sale_total:
                 user_cashback_level = UserCashbackLevel(user=instance.user,sale=instance,cashback_level=cashback_level)
                 user_cashback_level.save()
+                
+
+@receiver(post_save, sender=VendorSale)
+def update_cashback_level(sender, instance, created, **kwargs):
+    th = threading.Thread(target=update_cashback(created,instance), args=(), kwargs={})
+    th.start()
+    th.join()
     
-    
+        
+            
 # TRANSACTION_TYPE = (
 #     ("debited", "debited"), 
 #     ("credited", "credited"), 

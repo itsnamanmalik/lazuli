@@ -27,7 +27,7 @@ TRANSACTION_TYPE = (
 )
 
 class UserCashbackLevel(models.Model):
-    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE,related_name='cashback_levels')
     sale = models.ForeignKey(to='vendors.VendorSale', on_delete=models.CASCADE)
     cashback_level = models.ForeignKey(to='cashback.CashbackLevel', on_delete=models.CASCADE)
     class Meta:
