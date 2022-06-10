@@ -52,8 +52,11 @@ def update_cashback(created,instance):
         all_cashback_levels = CashbackLevel.objects.all()
         for cashback_level in all_cashback_levels:
             if instance.after_sale_total >= cashback_level.required_minimum_after_sale_total:
-                user_cashback_level = UserCashbackLevel(user=instance.user,sale=instance,cashback_level=cashback_level)
-                user_cashback_level.save()
+                try:
+                    user_cashback_level = UserCashbackLevel(user=instance.user,sale=instance,cashback_level=cashback_level)
+                    user_cashback_level.save()
+                except IntegrityError:
+                    pass
                 
 
 @receiver(post_save, sender=VendorSale)
