@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">Sales</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -22,13 +22,92 @@
 <!-- /.content-header -->
 
 <!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        
-        
-        
-    </div><!-- /.container-fluid -->
+
+<section id="content" class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary card-outline">
+
+                <div class="card-body">
+                        <div id="content-main">
+                            <div class="module filtered" id="changelist">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <a href="#"
+                                                    class="btn btn-outline-success float-right">
+                                                    <i class="fa fa-plus-circle"></i> &nbsp; Add New Sale
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="card">
+                                            <div class="card-body table-responsive p-0">
+                                                <table id="result_list" class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="djn-checkbox-select-all" tabindex="0" rowspan="1"
+                                                                colspan="1">
+                                                                <div class="text">
+                                                                    <span><input type="checkbox"
+                                                                            id="action-toggle"></span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                                                                <div class="text">
+                                                                    Vendor
+                                                                </div>
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                                                                <div class="text">
+                                                                    User
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr role="row" class="even">
+                                                            <td class="action-checkbox"><input type="checkbox"
+                                                                    name="_selected_action" value="10"
+                                                                    class="action-select"></td>
+                                                            <th class="field-vendor nowrap"><a
+                                                                    href="/admin/vendors/vendorsale/10/change/">8077344267</a>
+                                                            </th>
+                                                            <td class="field-user nowrap">8077344267</td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="action-checkbox"><input type="checkbox"
+                                                                    name="_selected_action" value="9"
+                                                                    class="action-select"></td>
+                                                            <th class="field-vendor nowrap"><a
+                                                                    href="/admin/vendors/vendorsale/9/change/">8077344267</a>
+                                                            </th>
+                                                            <td class="field-user nowrap">8077344267</td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="action-checkbox"><input type="checkbox"
+                                                                    name="_selected_action" value="5"
+                                                                    class="action-select"></td>
+                                                            <th class="field-vendor nowrap"><a
+                                                                    href="/admin/vendors/vendorsale/5/change/">8077344267</a>
+                                                            </th>
+                                                            <td class="field-user nowrap">8077344267</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                </div>
+            </div>
+            <br class="clear">
+        </div>
+    </div>
 </section>
-<!-- /.content -->
 
 {% endblock body %}
