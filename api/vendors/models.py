@@ -7,7 +7,7 @@ from api.cashback.models import CashbackLevel
 from django.db.models import F
 from django.db import IntegrityError
 import threading
-
+from django.db import transaction
 
 class Vendor(models.Model):
     name = models.CharField(blank=True,null=True,max_length=50)
@@ -53,8 +53,9 @@ def update_cashback(created,instance):
         for cashback_level in all_cashback_levels:
             if instance.after_sale_total >= cashback_level.required_minimum_after_sale_total:
                 try:
-                    user_cashback_level = UserCashbackLevel(user=instance.user,sale=instance,cashback_level=cashback_level)
-                    user_cashback_level.save()
+                    with transaction.atomic():
+                        user_cashback_level = UserCashbackLevel(user=instance.user,sale=instance,cashback_level=cashback_level)
+                        user_cashback_level.save()
                 except IntegrityError:
                     pass
                 
