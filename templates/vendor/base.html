@@ -95,8 +95,8 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               <li class="nav-item {% block dashactive %}{% endblock dashactive %}">
-                <a href="{% url 'dashboard' %}" class="nav-link">
+               <li class="nav-item">
+                <a href="{% url 'dashboard' %}" class="nav-link {% block dashactive %}{% endblock dashactive %}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Dashboard
@@ -104,8 +104,8 @@
                 </a>
               </li>
 
-              <li class="nav-item {% block salesactive %}{% endblock salesactive %}">
-                <a href="{% url 'sales' %}" class="nav-link">
+              <li class="nav-item">
+                <a href="{% url 'sales' %}" class="nav-link {% block salesactive %}{% endblock salesactive %}">
                   <i class="nav-icon fas fa-money-bill"></i>
                   <p>
                     Sales
@@ -114,8 +114,8 @@
               </li>
 
               
-              <li class="nav-item {% block profileactive %}{% endblock profileactive %}">
-                <a href="{% url 'my-profile' %}" class="nav-link">
+              <li class="nav-item">
+                <a href="{% url 'my-profile' %}" class="nav-link {% block profileactive %}{% endblock profileactive %}">
                   <i class="nav-icon fas fa-user"></i>
                   <p>
                     My Profile
@@ -123,8 +123,8 @@
                 </a>
               </li>
              
-              <li class="nav-item {% block passwordactive %}{% endblock passwordactive %}">
-                <a href="{% url 'reset-password' %}" class="nav-link">
+              <li class="nav-item">
+                <a href="{% url 'reset-password' %}" class="nav-link {% block passwordactive %}{% endblock passwordactive %}">
                   <i class="nav-icon fas fa-key"></i>
                   <p>
                     Change Password
