@@ -5,4 +5,5 @@ urlpatterns = [
         path('dashboard/', Dashboard.as_view(),name="dashboard"),
         path('', VendorLogin.as_view(),name="vendor-login"),
         
+        
 ]
