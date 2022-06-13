@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib import messages
 from django.shortcuts import redirect
-from api.vendors.models import Vendor
+from api.vendors.models import Vendor, VendorSale
 
 
 class Dashboard(View):
@@ -54,8 +54,8 @@ class Sales(View):
         except Vendor.DoesNotExist:
             return redirect('vendor-logout')
         
-        
-        context = {'vendor': vendor}    
+        allsales = VendorSale.objects.filter(vendor=vendor)
+        context = {'vendor': vendor,"allsales":allsales}    
         return render(request,'vendor/sales.html',context)
     
         

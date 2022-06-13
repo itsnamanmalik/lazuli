@@ -34,6 +34,7 @@ class Vendor(models.Model):
 class VendorSale(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, null=True, blank=True)
     vendor = models.ForeignKey(to='vendors.Vendor', on_delete=models.SET_NULL, null=True, blank=True)
+    product_name = models.CharField(max_length=100,null=False, blank=False)
     total_amount = models.FloatField(null=False,blank=False,default=0)
     after_sale_total = models.FloatField(null=False,blank=False,default=0)
     cashback_credited = models.BooleanField(null=False,blank=False,default=False)
