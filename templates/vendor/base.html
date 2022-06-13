@@ -170,6 +170,14 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
+      
+    {% for message in messages %}
+    <div class="fixed-alert alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>Message</strong> {{message}}
+        {% comment %} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> {% endcomment %}
+    </div>
+    {% endfor %}
+
       {% block body %}
 
       {% endblock body %}
