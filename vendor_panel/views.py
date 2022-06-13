@@ -188,7 +188,7 @@ class AddSales(View):
         except Vendor.DoesNotExist:
             return redirect('vendor-logout')
                 
-        context = {'vendor': vendor}    
+        context = {'vendor': vendor,'name': "", 'email': ""}    
         return render(request,'vendor/add-sales.html',context)
     
     
@@ -198,8 +198,28 @@ class AddSales(View):
         user_phone = request.POST.get('phone')
         product_name = request.POST.get('product-name')
         amount = request.POST.get('amount')
-        
-        if name and user_phone and product_name and amount:
+        if user_phone and not name and not product_name and not amount:
+            try:
+                phone = request.session['phone']
+            except KeyError:
+                return redirect('vendor-login')
+            try:
+                vendor = Vendor.objects.get(phone=phone)
+            except Vendor.DoesNotExist:
+                return redirect('vendor-logout')
+            
+            try:
+                user = User.objects.get(phone=user_phone)
+                name = user.name
+                email = user.email
+            except User.DoesNotExist:
+                name = ""
+                email = ""
+            context = {'vendor': vendor, 'name': name, 'email': email}    
+            return render(request,'vendor/add-sales.html',context)
+                
+                
+        elif name and user_phone and product_name and amount:
             amount = float(amount)
             try:
                 phone = request.session['phone']
