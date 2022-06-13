@@ -74,6 +74,29 @@ class MyProfile(View):
         context = {'vendor': vendor}    
         return render(request,'vendor/my-profile.html',context)
     
+    def post(self, request):
+        name = request.POST.get('name')
+        business_name = request.POST.get('business-name')
+        business_type = request.POST.get('business-type')
+        email = request.POST.get('email')
+        try:
+            phone = request.session['phone']
+        except KeyError:
+            return redirect('vendor-login')
+        try:
+            vendor = Vendor.objects.get(phone=phone)
+        except Vendor.DoesNotExist:
+            return redirect('vendor-logout')
+        
+        vendor.name = name
+        vendor.business_name = business_name
+        vendor.business_type = business_type
+        vendor.email = email
+        vendor.save()
+                
+        messages.success(request,"Profile updated Successfully!!")
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        
         
 class ResetPassword(View):
     def get(self, request):
