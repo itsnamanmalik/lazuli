@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib import messages
 from django.shortcuts import redirect
+from api.users.models import User
 from api.vendors.models import Vendor, VendorSale
 
 
@@ -149,11 +150,41 @@ class AddSales(View):
             vendor = Vendor.objects.get(phone=phone)
         except Vendor.DoesNotExist:
             return redirect('vendor-logout')
-        
-        
-        
+                
         context = {'vendor': vendor}    
         return render(request,'vendor/add-sales.html',context)
+    
+    
+    def post(self, request):
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        product_name = request.POST.get('product-name')
+        amount = request.POST.get('amount')
+        
+        if name and phone and product_name and amount:
+            try:
+                phone = request.session['phone']
+            except KeyError:
+                return redirect('vendor-login')
+            try:
+                vendor = Vendor.objects.get(phone=phone)
+            except Vendor.DoesNotExist:
+                return redirect('vendor-logout')
+            
+            try:
+                user = User.objects.get(phone=phone, vendor=vendor)
+            except User.DoesNotExist:
+                user = User(phone=phone, name=name, email=email)
+                user.save()
+            vendor_sales = VendorSale(user=user, vendor=vendor,product_name=product_name,total_amount=amount)
+            vendor_sales.save()
+                    
+            messages.success(request,"Sales Added Successfully!!")
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        messages.error(request,"Some error occured!!")
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
     
     
 class Logout(View):
