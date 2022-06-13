@@ -82,7 +82,11 @@ class MarketingFee(View):
         except Vendor.DoesNotExist:
             return redirect('vendor-logout')
         allsales = VendorSale.objects.filter(vendor=vendor)
-        marketing_fee_pending = ((allsales.filter(marketing_fee_paid=False).aggregate(Sum('total_amount'))['total_amount__sum'])*vendor.commission_percentage)/100
+        total_ammount = allsales.filter(marketing_fee_paid=False).aggregate(Sum('total_amount'))['total_amount__sum']
+        if total_ammount:
+            marketing_fee_pending = ((total_ammount)*vendor.commission_percentage)/100
+        else:
+            marketing_fee_pending = 0 
         alltransaction = VedorCommissionsTransaction.objects.filter(vendor=vendor)
         context = {'vendor': vendor,"alltransaction":alltransaction,"marketing_fee_pending":marketing_fee_pending}    
         return render(request,'vendor/marketing.html',context)
