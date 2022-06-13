@@ -42,7 +42,22 @@ class VendorSale(models.Model):
     date_created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     
+
+PAYMENT_STATUS = (
+    ("pending", "pending"), 
+    ("failed", "failed"), 
+    ("completed", "completed"), 
+)
     
+
+class VedorCommissionsTransaction(models.Model):
+    vendor = models.ForeignKey(to='vendors.Vendor', on_delete=models.SET_NULL, null=True, blank=True)
+    total_amount = models.FloatField(null=False,blank=False,default=0)
+    payment_status =  models.CharField(max_length=10, choices=PAYMENT_STATUS, default='pending') 
+    razorpay_order_id = models.CharField(blank=True,null=True,max_length=50)
+    payment_id = models.CharField(blank=True,null=True,max_length=50)
+    date_created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
+    last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     
 
 def update_cashback(created,instance):

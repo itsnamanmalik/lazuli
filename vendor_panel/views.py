@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib import messages
 from django.shortcuts import redirect
 from api.users.models import User
-from api.vendors.models import Vendor, VendorSale
+from api.vendors.models import Vendor, VendorSale,VedorCommissionsTransaction
 from django.db.models import Sum
 
 class Dashboard(View):
@@ -63,7 +63,27 @@ class Sales(View):
         allsales = VendorSale.objects.filter(vendor=vendor)
         context = {'vendor': vendor,"allsales":allsales}    
         return render(request,'vendor/sales.html',context)
+
+        
+class MarketingFee(View):
+    def get(self, request):
+        try:
+            phone = request.session['phone']
+        except KeyError:
+            return redirect('vendor-login')  
+        try:
+            vendor = Vendor.objects.get(phone=phone)
+        except Vendor.DoesNotExist:
+            return redirect('vendor-logout')
+        allsales = VendorSale.objects.filter(vendor=vendor)
+        marketing_fee_pending = ((allsales.filter(marketing_fee_paid=False).aggregate(Sum('total_amount'))['total_amount__sum'])*vendor.commission_percentage)/100
+        alltransaction = VedorCommissionsTransaction.objects.filter(vendor=vendor)
+        context = {'vendor': vendor,"alltransaction":alltransaction,"marketing_fee_pending":marketing_fee_pending}    
+        return render(request,'vendor/marketing.html',context)
     
+
+
+        
         
 class MyProfile(View):
     def get(self, request):

@@ -92,15 +92,16 @@ class VendorAdmin(admin.ModelAdmin):
     list_display = ('name','business_name','phone')
     
 
+@admin.register(VedorCommissionsTransaction)
+class VedorCommissionsTransactionAdmin(admin.ModelAdmin):
+    list_display = ('vendor','total_amount','payment_status','date_created','last_edited')
+    list_filter = ('vendor','payment_status',)
+    
+
 @admin.register(VendorSale)
 class VendorSaleAdmin(admin.ModelAdmin):
-    list_display = ('vendor','user')
-    list_filter = ('vendor','user',)
-    filter_input_length = {
-        "user": 6,
-    }
-    
-    
+    list_display = ('vendor','user','product_name','total_amount','marketing_fee_paid','date_created','last_edited')
+    list_filter = ('vendor','user',)   
 
 @admin.register(CashbackLevel)
 class CashbackLevelAdmin(admin.ModelAdmin):

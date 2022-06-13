@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+{% extends 'vendor/base.html' %}
+{% load static %}
+{% block marketingactive %}active{% endblock marketingactive %}
+{% block body %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Sales</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Sales</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+
+<section id="content" class="content">
+  
+    
+    <div class="row">
+        <div class="col-12">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>₹{{marketing_fee_pending}}</h3>
+
+                    <p>Pending Marketing fee</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">Pay Now <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-12">
+                    <a href="{% url 'add-sales' %}" class="btn btn-outline-primary float-right">
+                    <i class="fa fa-plus-circle"></i> &nbsp; Add New Sale
+                    </a>
+                    </div>
+                    </div>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Amount</th>
+                  <th>Payment Status</th>
+                  <th>Payment ID</th>
+                  <th>Date Time</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for transaction in alltransaction %}
+                <tr>
+                  <td>{{transaction.total_amount}}</td>
+                  <td>{{transaction.payment_status}}</td>
+                  <td>{{transaction.payment_id}}</td>
+                  <td> {{transaction.last_edited}}</td>
+                </tr>
+                {% endfor %}
+                
+                </tbody>
+                {% comment %} <tfoot>
+                <tr>
+                  <th>Rendering engine</th>
+                  <th>Browser</th>
+                  <th>Platform(s)</th>
+                  <th>Engine version</th>
+                  <th>CSS grade</th>
+                </tr>
+                </tfoot> {% endcomment %}
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+
+</section>
+
+
+
+
+
+{% endblock body %}
+
+
+{% block extrajs %}
+<!-- DataTables  & Plugins -->
+<script src="{% static 'vendor/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'vendor/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'vendor/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+
+<script>
+  $(function () {
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+
+{% endblock extrajs %}
+
+
+{% block extracs %}
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'vendor/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+{% endblock extracs %}
+
