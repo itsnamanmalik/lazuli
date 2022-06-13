@@ -188,6 +188,7 @@ class AddSales(View):
         amount = request.POST.get('amount')
         
         if name and user_phone and product_name and amount:
+            amount = float(amount)
             try:
                 phone = request.session['phone']
             except KeyError:
