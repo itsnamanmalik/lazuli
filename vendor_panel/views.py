@@ -85,10 +85,35 @@ class ResetPassword(View):
             vendor = Vendor.objects.get(phone=phone)
         except Vendor.DoesNotExist:
             return redirect('vendor-logout')
-        
-        
         context = {'vendor': vendor}    
         return render(request,'vendor/reset-pass.html',context)
+    
+    def post(self, request):
+        current_password = request.POST.get('current-password')
+        new_password = request.POST.get('new-password')
+        confirm_password = request.POST.get('confirm-password')
+        if current_password and new_password and confirm_password:
+            try:
+                phone = request.session['phone']
+            except KeyError:
+                return redirect('vendor-login')
+            try:
+                vendor = Vendor.objects.get(phone=phone)
+            except Vendor.DoesNotExist:
+                return redirect('vendor-logout')
+            if vendor.password != current_password:
+                messages.error(request,"Invalid Password!!")
+                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+            if new_password != confirm_password:
+                messages.error(request,"New Password and Confirm Password do not match!!")
+                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+            vendor.password = new_password
+            vendor.save()
+            messages.success(request,"Password reset successfully!")
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+                
+        
+        
     
         
 class AddSales(View):
