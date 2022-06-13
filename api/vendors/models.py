@@ -15,6 +15,7 @@ class Vendor(models.Model):
     business_type = models.CharField(blank=True,null=True,max_length=100)
     email = models.EmailField(max_length=100, null=True, blank=True)
     phone = models.CharField(null=False, blank=False,max_length=10, unique=True)
+    password = models.CharField(blank=False,null=False,max_length=100)
     address = models.TextField(null=False, blank=False, max_length=150)
     wallet = models.FloatField(null=False, blank=False, default=0)
     gst_number = models.CharField(blank=True,null=True,max_length=50)

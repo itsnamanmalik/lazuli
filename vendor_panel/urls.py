@@ -8,4 +8,5 @@ urlpatterns = [
         path('reset-password/', ResetPassword.as_view(),name="reset-password"),
         path('add-sales/', AddSales.as_view(),name="add-sales"),
         path('', VendorLogin.as_view(),name="vendor-login"),
+        path('vendor-logout/', Logout.as_view(),name="vendor-logout"),
 ]
