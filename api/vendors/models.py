@@ -85,8 +85,8 @@ def update_cashback(created,instance):
                     pass
                 
 def update_cashback_on_delete(instance):
-    all_cashback_levels = CashbackLevel.objects.all()
-    for cashback_level in all_cashback_levels:
+    all_vedor_sale = VendorSale.objects.all()
+    for cashback_level in all_vedor_sale:
         cashback_level.after_sale_total = cashback_level.after_sale_total - instance.total_amount
         cashback_level.save()
     
