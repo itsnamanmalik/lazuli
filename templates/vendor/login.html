@@ -31,7 +31,7 @@
       <form action="{% url 'vendor-login' %}" method="post">
         {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="phone" name="phone" class="form-control" placeholder="Phone" pattern="[0-9]">
+          <input type="phone" name="phone" class="form-control" placeholder="Phone">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-phone"></span>
