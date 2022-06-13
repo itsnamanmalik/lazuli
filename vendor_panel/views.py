@@ -18,11 +18,17 @@ class Dashboard(View):
             return redirect('vendor-logout')
         
         allsales = VendorSale.objects.filter(vendor=vendor)
-        saletotal = allsales.aggregate(Sum('total_amount'))['total_amount__sum']
         salecount = allsales.count()
+        if salecount>0:
+            saletotal = allsales.aggregate(Sum('total_amount'))['total_amount__sum']
+        else:
+            saletotal = 0
         total_users = User.objects.all().count()
-        marketing_fee_pending = ((allsales.filter(marketing_fee_paid=False).aggregate(Sum('total_amount'))['total_amount__sum'])*vendor.commission_percentage)/100
-       
+        total_sum = allsales.filter(marketing_fee_paid=False).aggregate(Sum('total_amount'))['total_amount__sum']
+        if total_sum:
+            marketing_fee_pending = ((total_sum)*vendor.commission_percentage)/100
+        else:
+            marketing_fee_pending = 0
         context = {'vendor': vendor,'saletotal':saletotal,'salecount':salecount,'total_users':total_users,'marketing_fee_pending':marketing_fee_pending}    
         return render(request,'vendor/dashboard.html',context)
     
