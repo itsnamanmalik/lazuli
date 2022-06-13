@@ -1,6 +1,6 @@
 from functools import total_ordering
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,post_delete
 from django.dispatch import receiver
 from api.users.models import UserCashbackLevel
 from api.cashback.models import CashbackLevel
@@ -76,11 +76,33 @@ def update_cashback(created,instance):
                         user_cashback_level.save()
                 except IntegrityError:
                     pass
+            else:
+                try:
+                    with transaction.atomic():
+                        user_cashback_level = UserCashbackLevel.objects.get(user=instance.user,sale=instance,cashback_level=cashback_level)
+                        user_cashback_level.delete()
+                except UserCashbackLevel.DoesNotExist:
+                    pass
                 
-
+def update_cashback_on_delete(instance):
+    all_cashback_levels = CashbackLevel.objects.all()
+    for cashback_level in all_cashback_levels:
+        cashback_level.after_sale_total = cashback_level.after_sale_total - instance.total_amount
+        cashback_level.save()
+    
+    
+    
 @receiver(post_save, sender=VendorSale)
 def update_cashback_level(sender, instance, created, **kwargs):
     th = threading.Thread(target=update_cashback(created,instance), args=(), kwargs={})
+    th.start()
+    th.join()
+
+
+
+@receiver(post_delete, sender=VendorSale)
+def update_cashback_level_on_delete(sender, instance, **kwargs):
+    th = threading.Thread(target=update_cashback_on_delete(instance), args=(), kwargs={})
     th.start()
     th.join()
     
