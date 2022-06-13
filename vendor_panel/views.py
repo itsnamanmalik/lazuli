@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from api.users.models import User
 from api.vendors.models import Vendor, VendorSale
-
+from django.db.models import Sum
 
 class Dashboard(View):
     def get(self, request):
@@ -17,8 +17,13 @@ class Dashboard(View):
         except Vendor.DoesNotExist:
             return redirect('vendor-logout')
         
-        
-        context = {'vendor': vendor}    
+        allsales = VendorSale.objects.filter(vendor=vendor)
+        saletotal = allsales.aggregate(Sum('total_amount'))['total_amount__sum']
+        salecount = allsales.count()
+        total_users = User.objects.all().count()
+        marketing_fee_pending = ((allsales.filter(marketing_fee_paid=False).aggregate(Sum('total_amount'))['total_amount__sum'])*vendor.commission_percentage)/100
+       
+        context = {'vendor': vendor,'saletotal':saletotal,'salecount':salecount,'total_users':total_users,'marketing_fee_pending':marketing_fee_pending}    
         return render(request,'vendor/dashboard.html',context)
     
         
