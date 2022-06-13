@@ -215,7 +215,10 @@ JAZZMIN_SETTINGS = {
         "users.User":"fas fa-user",
         "users.UserWalletTransaction":"fas fa-money-check",
         "vendors.Vendor":"fas fa-house-user",
-        "vendors.VendorSale":"fas fa-cart-arrow-down"
+        "vendors.VendorSale":"fas fa-cart-arrow-down",
+        "vendors.VedorCommissionsTransaction":"fas fa-receipt",
+        "vendors.VedorCommissionsTransaction":"fas fa-receipt",
+        "cashback.CashbackLevel":"fas fa-tags"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",

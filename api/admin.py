@@ -100,7 +100,7 @@ class VedorCommissionsTransactionAdmin(admin.ModelAdmin):
 
 @admin.register(VendorSale)
 class VendorSaleAdmin(admin.ModelAdmin):
-    list_display = ('vendor','user','product_name','total_amount','marketing_fee_paid','date_created','last_edited')
+    list_display = ('vendor','user','product_name','total_amount','after_sale_total','marketing_fee_paid','date_created','last_edited')
     list_filter = ('vendor','user',)   
 
 @admin.register(CashbackLevel)
