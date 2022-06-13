@@ -188,7 +188,7 @@ class AddSales(View):
         except Vendor.DoesNotExist:
             return redirect('vendor-logout')
                 
-        context = {'vendor': vendor,'name': "", 'email': ""}    
+        context = {'vendor': vendor,'name': "", 'email': "",'phone':""}    
         return render(request,'vendor/add-sales.html',context)
     
     
@@ -212,10 +212,12 @@ class AddSales(View):
                 user = User.objects.get(phone=user_phone)
                 name = user.name
                 email = user.email
+                user_phone2 = user.phone
             except User.DoesNotExist:
                 name = ""
                 email = ""
-            context = {'vendor': vendor, 'name': name, 'email': email}    
+                user_phone2 = ""
+            context = {'vendor': vendor, 'name': name, 'email': email,'phone':user_phone2}    
             return render(request,'vendor/add-sales.html',context)
                 
                 

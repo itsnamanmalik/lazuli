@@ -46,7 +46,7 @@
                                     <label class="col-sm-2 text-left" for="phone">Phone</label>
                                     <div class="col-sm-10">
                                         <input type="phone" class="form-control" id="phone" maxlength="100" name="phone"
-                                            placeholder="Phone" onchange="updateDetails(this.value)" required>
+                                            placeholder="Phone" value="{{phone}}" onchange="updateDetails(this.value)" required>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                     <label class="col-sm-2 text-left" for="email">Email</label>
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="email" maxlength="100" name="email"
-                                            name="email" placeholder="Email">
+                                            name="email" value="{{email}}" placeholder="Email">
                                     </div>
                                 </div>
                             </div>
