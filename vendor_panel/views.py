@@ -198,7 +198,7 @@ class AddSales(View):
                 return redirect('vendor-logout')
             
             try:
-                user = User.objects.get(phone=user_phone, vendor=vendor)
+                user = User.objects.get(phone=user_phone)
             except User.DoesNotExist:
                 user = User(phone=user_phone, name=name, email=email)
                 user.save()
