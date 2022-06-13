@@ -115,6 +115,7 @@ class MyProfile(View):
         business_name = request.POST.get('business-name')
         business_type = request.POST.get('business-type')
         email = request.POST.get('email')
+        gst_number = request.POST.get('gst_number')
         try:
             phone = request.session['phone']
         except KeyError:
@@ -128,6 +129,7 @@ class MyProfile(View):
         vendor.business_name = business_name
         vendor.business_type = business_type
         vendor.email = email
+        vendor.gst_number = gst_number
         vendor.save()
                 
         messages.success(request,"Profile updated Successfully!!")
