@@ -85,7 +85,7 @@ def update_cashback(created,instance):
                     pass
                 
 def update_cashback_on_delete(instance):
-    all_vendor_sale = VendorSale.objects.all()
+    all_vendor_sale = VendorSale.objects.filter(date_created__lt=instance.date_created)
     for vendor_sale in all_vendor_sale:
         vendor_sale.after_sale_total = vendor_sale.after_sale_total - instance.total_amount
         vendor_sale.save()
