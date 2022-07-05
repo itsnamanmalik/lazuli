@@ -7,8 +7,8 @@
 {% block content_title %} {% trans 'Dashboard' %} {% endblock %}
 
 {% block breadcrumbs %}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i>{% trans 'Home' %}</a></li>
         <li class="breadcrumb-item">{% trans 'Dashboard' %}</li>
     </ol>
 {% endblock %}
@@ -21,7 +21,8 @@
     {% endif %}
 
     <div class="col-lg-9 col-12">
-        <div class="row">
+       
+        <div class="row m-2">
             <a href="{% url 'deploycash' %}" class="btn btn-outline-success form-control">Deploy Cashback</a>
         </div>
 
