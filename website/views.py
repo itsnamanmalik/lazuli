@@ -10,8 +10,13 @@ from django.shortcuts import redirect
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
+from api.cron import credit_cashback
 
 
+class DeployCashback(View):
+    def get(self, request):
+        credit_cashback()
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 

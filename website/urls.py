@@ -6,4 +6,5 @@ urlpatterns = [
         path('stores/', Stores.as_view(),name="stores"),
         path('brands/', Brands.as_view(),name="brands"),
         path('deals/', Deals.as_view(),name="deals"),
+        path('deploy-cashback/', DeployCashback.as_view(),name="deploycash"),
 ]
