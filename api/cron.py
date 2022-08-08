@@ -5,6 +5,9 @@ from api.vendors.models import VendorSale
 from api.cashback.models import CashbackLevel
 from django.db.models import Sum
 
+
+
+#percent calc
 def credit_cashback():
     total_revenue = VendorSale.objects.filter(cashback_credited=False).aggregate(Sum('total_amount'))['total_amount__sum']
     total_cashback = (total_revenue*50)/100
@@ -19,6 +22,8 @@ def credit_cashback():
         for level_user_cashback in this_level_users_cashback:
             this_ratio_cashback = ((level_user_cashback.sale.total_amount/total_level_revenue)*ratio_cashback)
             this_equal_cashback = equal_cashback/total_level_count
+            single_cashback_amount = this_equal_cashback+this_ratio_cashback
+            if single_cashback_amount > ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100):
+                single_cashback_amount = ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100)
             user_transaction = UserWalletTransaction(user=level_user_cashback.user,transaction_type='',amount=(this_equal_cashback+this_ratio_cashback),paid_for='Cashback For Purchase')
             user_transaction.save()
-

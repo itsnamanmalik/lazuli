@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class User(models.Model):
     name = models.CharField(blank=True,null=True,max_length=50)
@@ -40,5 +41,17 @@ class UserWalletTransaction(models.Model):
     amount = models.FloatField(null=False, blank=False)
     paid_for = models.CharField(max_length=100,null=False, blank=False)
     time_date = models.DateTimeField(default=datetime.now,null=False,blank=False)
+    
     def __str__(self):
         return self.user.phone+"-->"+self.transaction_type
+
+
+@receiver(post_save, sender=UserWalletTransaction)
+def update_balance(sender, instance, created, **kwargs):
+    if created:
+        if instance.transaction_type == 'debited': 
+            instance.user.wallet = instance.user.wallet - instance.amount
+            instance.user.save()
+        elif instance.transaction_type == 'credited':
+            instance.user.wallet = instance.user.wallet + instance.amount
+            instance.user.save()
