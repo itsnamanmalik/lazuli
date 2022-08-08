@@ -109,3 +109,7 @@ class CashbackLevelAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
+@admin.register(UserCashbackLevel)
+class UserCashbackLevelAdmin(admin.ModelAdmin):
+    list_display = ('user','sale','cashback_level')
+    
