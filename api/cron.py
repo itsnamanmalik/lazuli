@@ -10,7 +10,8 @@ from django.db.models import Sum
 #percent calc
 def credit_cashback():
     total_revenue = VendorSale.objects.filter(cashback_credited=False).aggregate(Sum('total_amount'))['total_amount__sum']
-    total_cashback = (total_revenue*50)/100
+    total_profit = (total_revenue*10)/100
+    total_cashback = (total_profit*50)/100
     all_cashback_levels = CashbackLevel.objects.all()
     for cashback_level in all_cashback_levels:
         level_cashback = (total_cashback*cashback_level.percentage)/100
