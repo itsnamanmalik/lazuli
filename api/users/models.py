@@ -40,7 +40,7 @@ class UserCashbackLevel(models.Model):
 class UserWalletTransaction(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='transactions')
     transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE, default='debited') 
-    cashback_level =  models.ForeignKey(to='vendors.UserCashbackLevel', on_delete=models.SET_NULL,null=True, blank=True)
+    cashback_level =  models.ForeignKey(to='users.UserCashbackLevel', on_delete=models.SET_NULL,null=True, blank=True)
     amount = models.FloatField(null=False, blank=False)
     paid_for = models.CharField(max_length=100,null=False, blank=False)
     time_date = models.DateTimeField(default=datetime.now,null=False,blank=False)
