@@ -17,7 +17,7 @@ def credit_cashback():
         level_cashback = (total_cashback*cashback_level.percentage)/100
         equal_cashback = (level_cashback*cashback_level.fixed_distribution_percentage)/100
         ratio_cashback = (level_cashback*cashback_level.ratio_distribution_percentage)/100
-        this_level_users_cashback = UserCashbackLevel.objects.filter(cashback_level=cashback_level)
+        this_level_users_cashback = UserCashbackLevel.objects.filter(cashback_level=cashback_level,cashback_given=False)
         total_level_revenue = this_level_users_cashback.aggregate(Sum('sale__total_amount'))['sale__total_amount__sum']
         total_level_count = this_level_users_cashback.count()
         for level_user_cashback in this_level_users_cashback:
@@ -26,5 +26,8 @@ def credit_cashback():
             single_cashback_amount = this_equal_cashback+this_ratio_cashback
             if single_cashback_amount > ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100):
                 single_cashback_amount = ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100)
-            user_transaction = UserWalletTransaction(user=level_user_cashback.user,transaction_type='',amount=(single_cashback_amount),paid_for='Cashback For Purchase')
+                level_user_cashback.cashback_given = True
+                level_user_cashback.save()
+            user_transaction = UserWalletTransaction(user=level_user_cashback.user,transaction_type='credited',cashback_level=level_user_cashback,amount=(single_cashback_amount),paid_for='Cashback For Purchase')
             user_transaction.save()
+            

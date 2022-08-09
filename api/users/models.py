@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models import Sum
 
 class User(models.Model):
     name = models.CharField(blank=True,null=True,max_length=50)
@@ -31,13 +32,15 @@ class UserCashbackLevel(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE,related_name='cashback_levels')
     sale = models.ForeignKey(to='vendors.VendorSale', on_delete=models.CASCADE)
     cashback_level = models.ForeignKey(to='cashback.CashbackLevel', on_delete=models.CASCADE)
+    cashback_given = models.BooleanField(default=False)
     class Meta:
         unique_together = ('user','sale','cashback_level',)
     
 
 class UserWalletTransaction(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='transactions')
-    transaction_type = models.CharField(max_length = 20, choices = TRANSACTION_TYPE, default='debited') 
+    transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE, default='debited') 
+    cashback_level =  models.ForeignKey(to='vendors.UserCashbackLevel', on_delete=models.SET_NULL,null=True, blank=True)
     amount = models.FloatField(null=False, blank=False)
     paid_for = models.CharField(max_length=100,null=False, blank=False)
     time_date = models.DateTimeField(default=datetime.now,null=False,blank=False)
@@ -61,3 +64,11 @@ def update_balance(sender, instance, created, **kwargs):
         elif instance.transaction_type == 'credited':
             instance.user.wallet = instance.user.wallet + instance.amount
             instance.user.save()
+            
+        if instance.cashback_level:
+            total_sale_cashback = UserWalletTransaction.objects.filter(cashback_level__sale = instance.cashback_level.sale).aggregate(Sum('cashback_level__sale__total_amount'))['cashback_level__sale__total_amount__sum']
+            if total_sale_cashback >= instance.cashback_level.sale.total_amount:
+                instance.cashback_level.sale.cashback_credited = True
+                instance.cashback_level.sale.cashback_credited.save()
+                
+
