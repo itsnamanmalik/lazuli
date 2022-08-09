@@ -32,7 +32,7 @@ class UserCashbackLevel(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE,related_name='cashback_levels')
     sale = models.ForeignKey(to='vendors.VendorSale', on_delete=models.CASCADE)
     cashback_level = models.ForeignKey(to='cashback.CashbackLevel', on_delete=models.CASCADE)
-    given_cashback = models.FloatField(null=False, blank=False)
+    given_cashback = models.FloatField(null=False, blank=False, default=0)
     cashback_given = models.BooleanField(default=False)
     class Meta:
         unique_together = ('user','sale','cashback_level',)
