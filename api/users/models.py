@@ -37,9 +37,10 @@ class UserCashbackLevel(models.Model):
     class Meta:
         unique_together = ('user','sale','cashback_level',)
     def save(self, *args, **kwargs):
-        self.given_cashback = round(self.given_cashback, 2)
-        if self.given_cashback < 0:
-            self.given_cashback = 0
+        if self.given_cashback:
+            self.given_cashback = round(self.given_cashback, 2)
+            if self.given_cashback < 0:
+                self.given_cashback = 0
         super(UserCashbackLevel,self).save(*args, **kwargs)   
 
 class UserWalletTransaction(models.Model):
