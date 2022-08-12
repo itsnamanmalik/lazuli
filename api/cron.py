@@ -15,6 +15,8 @@ def credit_cashback():
     all_cashback_levels = CashbackLevel.objects.all()
     for cashback_level in all_cashback_levels:
         level_cashback = (total_cashback*cashback_level.percentage)/100
+        if level_cashback>cashback_level.max_cashback:
+            level_cashback = cashback_level.max_cashback
         equal_cashback = (level_cashback*cashback_level.fixed_distribution_percentage)/100
         ratio_cashback = (level_cashback*cashback_level.ratio_distribution_percentage)/100
         this_level_users_cashback = UserCashbackLevel.objects.filter(cashback_level=cashback_level,cashback_given=False)
