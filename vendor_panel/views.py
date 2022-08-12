@@ -216,7 +216,7 @@ class AddSales(View):
             except User.DoesNotExist:
                 name = ""
                 email = ""
-                user_phone2 = ""
+                user_phone2 = user_phone
             context = {'vendor': vendor, 'name': name, 'email': email,'phone':user_phone2}    
             return render(request,'vendor/add-sales.html',context)
                 
