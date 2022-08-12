@@ -9,7 +9,7 @@ class User(models.Model):
     email = models.EmailField(max_length=100, null=True, blank=True)
     phone = models.CharField(null=False, blank=False,max_length=10, unique=True)
     wallet = models.FloatField(null=False, blank=False, default=0)
-    user_id = models.CharField(max_length=20, null=False, blank=False, unique=True)
+    # user_id = models.CharField(max_length=20, null=False, blank=False)
     referral_id = models.CharField(max_length=20, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     notification_id = models.CharField(max_length=500, default="",null=False, blank=True)
