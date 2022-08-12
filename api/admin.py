@@ -48,7 +48,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(UserWalletTransaction)
 class UserWalletTransactionAdmin(admin.ModelAdmin):
-    list_display = ('user','transaction_type','amount')
+    list_display = ('user','transaction_type','amount','time_date')
     list_filter = ('transaction_type',)
         
 
