@@ -32,9 +32,10 @@ def credit_cashback():
                 level_user_cashback.save()
             level_user_cashback.given_cashback = level_user_cashback.given_cashback + single_cashback_amount
             level_user_cashback.save()
-            if single_cashback_amount > ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100):
+            if level_user_cashback.given_cashback > ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100):
+                single_cashback_amount = ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100) - (level_user_cashback.given_cashback - single_cashback_amount)
+                level_user_cashback.given_cashback = ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100)
                 level_user_cashback.cashback_given = True
                 level_user_cashback.save()
             user_transaction = UserWalletTransaction(user=level_user_cashback.user,transaction_type='credited',cashback_level=level_user_cashback,amount=(single_cashback_amount),paid_for='Cashback For Purchase')
             user_transaction.save()
-            

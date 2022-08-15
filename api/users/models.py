@@ -72,7 +72,9 @@ def update_balance(sender, instance, created, **kwargs):
             instance.user.save()
             
         if instance.cashback_level:
-            total_sale_cashback = UserWalletTransaction.objects.filter(cashback_level__sale = instance.cashback_level.sale).aggregate(Sum('cashback_level__sale__total_amount'))['cashback_level__sale__total_amount__sum']
+            total_sale_cashback = UserWalletTransaction.objects.filter(cashback_level__sale = instance.cashback_level.sale).aggregate(Sum('cashback_level__given_cashback'))['cashback_level__given_cashback__sum']
+            instance.cashback_level.sale.cashback_given = total_sale_cashback
+            instance.cashback_level.sale.save()
             if total_sale_cashback >= instance.cashback_level.sale.total_amount:
                 instance.cashback_level.sale.cashback_credited = True
                 instance.cashback_level.sale.save()
