@@ -46,7 +46,8 @@ class UserCashbackLevel(models.Model):
 class UserWalletTransaction(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='transactions')
     transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE, default='debited') 
-    cashback_level =  models.ForeignKey(to='users.UserCashbackLevel', on_delete=models.SET_NULL,null=True, blank=True)
+    cashback_level = models.ForeignKey(to='users.UserCashbackLevel', on_delete=models.SET_NULL,null=True, blank=True)
+    is_cashback_transaction = models.BooleanField(default=False,null=False, blank=False)
     amount = models.FloatField(null=False, blank=False)
     paid_for = models.CharField(max_length=100,null=False, blank=False)
     time_date = models.DateTimeField(default=datetime.now,null=False,blank=False)
@@ -72,6 +73,8 @@ def update_balance(sender, instance, created, **kwargs):
             instance.user.save()
             
         if instance.cashback_level:
+            instance.is_cashback_transaction = True
+            instance.save()
             total_sale_cashback = UserWalletTransaction.objects.filter(cashback_level__sale = instance.cashback_level.sale).aggregate(Sum('cashback_level__given_cashback'))['cashback_level__given_cashback__sum']
             instance.cashback_level.sale.cashback_given = total_sale_cashback
             instance.cashback_level.sale.save()

@@ -14,6 +14,7 @@ from rest_framework.authtoken.models import TokenProxy
 from django.utils.html import format_html
 from import_export.admin import ExportMixin
 from import_export import resources
+from rangefilter.filters import DateRangeFilter, DateTimeRangeFilter
 
 
 admin.site.site_header='Lazuli'
@@ -49,7 +50,10 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(UserWalletTransaction)
 class UserWalletTransactionAdmin(admin.ModelAdmin):
     list_display = ('user','transaction_type','amount','time_date')
-    list_filter = ('transaction_type',)
+    list_filter = ('transaction_type','is_cashback_transaction','time_date',('time_date', DateRangeFilter))
+    def get_date(self,obj):
+        if obj.time_date:
+            return obj.time_date
         
 
 @admin.register(Store)

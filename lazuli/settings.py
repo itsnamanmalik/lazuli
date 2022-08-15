@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'api.cashback',
     'import_export',
     'django_cleanup',
+    'rangefilter',
 ]
 
 MIDDLEWARE = [
