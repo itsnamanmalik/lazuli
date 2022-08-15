@@ -50,11 +50,11 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(UserWalletTransaction)
 class UserWalletTransactionAdmin(admin.ModelAdmin):
     list_display = ('user','transaction_type','amount','time_date')
-    list_filter = ('transaction_type','is_cashback_transaction','time_date',('time_date', DateRangeFilter))
-    def get_date(self,obj):
-        if obj.time_date:
-            return obj.time_date
-        
+    list_filter = ('transaction_type','is_cashback_transaction','time_date')
+    # def get_date(self,obj):
+    #     if obj.time_date:
+    #         return obj.time_date
+        # ,('time_date', DateRangeFilter)
 
 @admin.register(Store)
 class StoreAdmin(admin.ModelAdmin):
