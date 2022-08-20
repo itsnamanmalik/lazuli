@@ -15,7 +15,8 @@ from django.utils.html import format_html
 from import_export.admin import ExportMixin
 from import_export import resources
 from rangefilter.filters import DateRangeFilter, DateTimeRangeFilter
-
+from import_export.admin import ExportMixin
+from import_export import resources
 
 admin.site.site_header='Lazuli'
 admin.site.site_title = 'Lazuli'
@@ -47,8 +48,15 @@ class UserAdmin(admin.ModelAdmin):
 
 
 
+class TransactionResource(resources.ModelResource):
+    class Meta:
+        model = UserWalletTransaction
+        fields = ('user__phone','transaction_type','amount','paid_for','transaction_breakdown','time_date')
+
+
 @admin.register(UserWalletTransaction)
-class UserWalletTransactionAdmin(admin.ModelAdmin):
+class UserWalletTransactionAdmin(ExportMixin,admin.ModelAdmin):
+    resource_class = TransactionResource
     list_display = ('user','transaction_type','amount','time_date')
     list_filter = ('transaction_type','is_cashback_transaction','time_date')
     # def get_date(self,obj):

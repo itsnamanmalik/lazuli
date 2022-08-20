@@ -50,6 +50,7 @@ class UserWalletTransaction(models.Model):
     is_cashback_transaction = models.BooleanField(default=False,null=False, blank=False)
     amount = models.FloatField(null=False, blank=False)
     paid_for = models.CharField(max_length=100,null=False, blank=False)
+    transaction_breakdown = models.TextField(null=True, blank=True)
     time_date = models.DateTimeField(default=datetime.now,null=False,blank=False)
   
     def __str__(self):

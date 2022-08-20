@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'import_export',
     'django_cleanup',
     'rangefilter',
+    'import_export',
 ]
 
 MIDDLEWARE = [
