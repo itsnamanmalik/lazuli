@@ -30,7 +30,7 @@ def credit_cashback():
             this_ratio_cashback = ((level_user_cashback.sale.total_amount/total_level_revenue)*ratio_cashback)
             this_equal_cashback = equal_cashback/total_level_count
             single_cashback_amount = this_equal_cashback+this_ratio_cashback
-            breakdown_last = "This Sale Equal Distributed Cashback: "+str(this_equal_cashback)+"\nThis Sale Ratio Distributed Cashback: "+str(this_ratio_cashback)+"\nTotal Cashback: "+str(total_cashback)
+            breakdown_last = "This Sale Equal Distributed Cashback: "+str(this_equal_cashback)+"\nThis Sale Ratio Distributed Cashback: "+str(this_ratio_cashback)+"\nTotal Cashback: "+str(single_cashback_amount)
             if single_cashback_amount > ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100):
                 single_cashback_amount = ((level_user_cashback.sale.total_amount*level_user_cashback.cashback_level.percentage)/100)
                 level_user_cashback.cashback_given = True
