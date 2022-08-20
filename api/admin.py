@@ -123,5 +123,5 @@ class CashbackLevelAdmin(admin.ModelAdmin):
 
 @admin.register(UserCashbackLevel)
 class UserCashbackLevelAdmin(admin.ModelAdmin):
-    list_display = ('user','sale','cashback_level')
+    list_display = ('user','sale','cashback_level','given_cashback')
     
