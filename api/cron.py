@@ -24,7 +24,7 @@ def credit_cashback():
         total_level_revenue = this_level_users_cashback.aggregate(Sum('sale__total_amount'))['sale__total_amount__sum']
         total_level_count = this_level_users_cashback.count()
         
-        breakdown_init = breakdown_init+"\n"+str(cashback_level.name)+" Cashback: "+str(level_cashback)+"\nEqual Distribution Cashback: "+str(equal_cashback)+"\nRatio Distribution Cashback: "+str(ratio_cashback)+"\n"+str(cashback_level.name)+" Cashback Total Revenue: "+str(total_level_revenue)+"\n"+str(cashback_level.name)+" Cashback Total Users: "+str(total_level_count)
+        breakdown_init = breakdown_init+"\n"+str(cashback_level.name)+"Level Cashback: "+str(level_cashback)+"\nEqual Distribution Cashback: "+str(equal_cashback)+"\nRatio Distribution Cashback: "+str(ratio_cashback)+"\n"+str(cashback_level.name)+" Level Cashback Total Revenue: "+str(total_level_revenue)+"\n"+str(cashback_level.name)+" Level Cashback Total Users: "+str(total_level_count)
         
         for level_user_cashback in this_level_users_cashback:
             this_ratio_cashback = ((level_user_cashback.sale.total_amount/total_level_revenue)*ratio_cashback)
