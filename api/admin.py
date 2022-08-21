@@ -115,7 +115,7 @@ class VendorSaleAdmin(admin.ModelAdmin):
 
 @admin.register(CashbackLevel)
 class CashbackLevelAdmin(admin.ModelAdmin):
-    list_display = ('name','percentage','fixed_distribution_percentage','ratio_distribution_percentage','max_cashback')
+    list_display = ('name','percentage','fixed_distribution_percentage','ratio_distribution_percentage')
     search_fields = ('name',)
 
 
