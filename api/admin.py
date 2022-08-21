@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from api.ui.models import *
 from api.common.models import *
 from api.affiliate.models import *
@@ -11,7 +10,6 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User as StaffUser
 from api.models import CustomUser
 from rest_framework.authtoken.models import TokenProxy
-from django.utils.html import format_html
 from import_export.admin import ExportMixin
 from import_export import resources
 from rangefilter.filters import DateRangeFilter, DateTimeRangeFilter
