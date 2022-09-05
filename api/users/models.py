@@ -80,7 +80,7 @@ def update_balance(sender, instance, created, **kwargs):
             instance.cashback_level.sale.cashback_given = total_sale_cashback
             instance.cashback_level.sale.save()
             if total_sale_cashback >= instance.cashback_level.sale.total_amount:
-                instance.cashback_level.sale.cashback_credited = True
+                instance.cashback_level.sale.full_cashback_credited = True
                 instance.cashback_level.sale.save()
                 
 

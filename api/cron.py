@@ -9,7 +9,7 @@ from django.db.models import Sum
 
 #percent calc
 def credit_cashback():
-    total_revenue = VendorSale.objects.filter(cashback_credited=False).aggregate(Sum('total_amount'))['total_amount__sum']
+    total_revenue = VendorSale.objects.filter(cashback_credited_once=False).aggregate(Sum('total_amount'))['total_amount__sum']
     total_profit = (total_revenue*10)/100
     total_cashback = (total_profit*50)/100
     breakdown_init = "Total Revenue: "+str(total_revenue)+"\nTotal Profit: "+str(total_profit)+"\nTotal Cashback We can Distribute: "+str(total_cashback)
@@ -44,3 +44,5 @@ def credit_cashback():
             final_breakdown = breakdown_init+"\n\n"+breakdown_last
             user_transaction = UserWalletTransaction(user=level_user_cashback.user,transaction_type='credited',cashback_level=level_user_cashback,amount=(single_cashback_amount),paid_for='Cashback For Purchase',transaction_breakdown=final_breakdown)
             user_transaction.save()
+    VendorSale.objects.filter(cashback_credited_once=False).update(cashback_credited_once=True)
+     
