@@ -88,6 +88,8 @@ def update_cashback(created,instance):
                         user_cashback_level.delete()
                 except UserCashbackLevel.DoesNotExist:
                     pass
+  
+  
                 
 def update_cashback_on_delete(instance):
     all_vendor_sale = VendorSale.objects.filter(date_created__lt=instance.date_created)
