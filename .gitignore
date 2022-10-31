@@ -117,3 +117,6 @@ media/images/
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+
+# ignored virtual environment
+/venv

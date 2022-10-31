@@ -7,4 +7,5 @@ urlpatterns = [
         path('brands/', Brands.as_view(),name="brands"),
         path('deals/', Deals.as_view(),name="deals"),
         path('deploy-cashback/', DeployCashback.as_view(),name="deploycash"),
+        path('login/', Login.as_view(),name="login"),
 ]
