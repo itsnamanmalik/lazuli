@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div id="login-page">
+    <div class="container main-login shadow-lg p-4 bg-white text-center">
+        <h1 class="text-center display-5 fw-600 mt-3 text-purple">
+            Lazuli  - Login
+        </h1>
+
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <img src="{% static 'website/images/common/logo.png' %}" style="height: 400px" class="img-fluid d-none d-lg-block"
+                    alt="register" >
+            </div>
+
+            {% if otp_sent == True %}
+            <div class="col-lg-7 mt-lg-5 text-center text-lg-start">
+                <h3 class="mt-lg-5 text-black fw-500 text-dark">Enter OTP</h3>
+
+                <p class="mt-2 text-secondary">
+                    An OTP was sent to number: {{phone}}
+
+                <form method="post" class="input-group my-4 d-flex flex-column">
+                {% csrf_token %}
+                <input type="hidden" name="phone" value="{{phone}}"/>                
+                    <div class="divi d-flex w-100 mx-auto">
+                        <input type="number" name="otp_p1" class="form-control me-2 login-otp" autofocus required maxlength="1" />
+                        <input type="number" name="otp_p2" class="form-control me-2 login-otp" required maxlength="1" />
+                        <input type="number" name="otp_p3" class="form-control me-2 login-otp" required maxlength="1" />
+                        <input type="number" name="otp_p4" class="form-control me-2 login-otp" required maxlength="1" />
+                        <input type="number" name="otp_p5" class="form-control me-2 login-otp" required maxlength="1" />
+                        <input type="number" name="otp_p6" class="form-control me-2 login-otp" required maxlength="1" />
+                    </div>
+                    <div class="mx-auto mt-2 mx-lg-0">
+                        <button class="btn btn-lg btn-dark shadow rounded-3 mt-3 px-5" type="submit">
+                            Verify OTP
+                        </button>
+                    </div>
+                </form>
+            </div>
+            {% else %}
+            <div class="col-lg-7 mt-lg-5 text-center text-lg-start">
+                <h3 class="mt-lg-5 text-black fw-400 text-start text-dark ms-2">
+                    Enter Mobile Number
+                </h3>
+
+                <form method="post" class="input-group mt-3 mb-4 mx-auto">
+                {% csrf_token %}
+                    <div class="input-group-append me-1">
+                        <button class="btn btn-light p-md-3 p-2 rounded-left" type="button">+91</button>
+                    </div>
+                    <input name="phone" required autofocus id="input-num" type="text"
+                        class="form-control login p-md-3 p-2 rounded-left number-input"
+                        placeholder="Recipient's number" />
+                    <div class="input-group-append">
+                        <button class="btn btn-dark p-md-3 p-2 rounded-right shadow" type="submit">
+                            Get OTP
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var container = document.getElementsByClassName('divi')[0];
+    container.onkeyup = function (e) {
+    var target = e.srcElement || e.target;
+    var maxLength = parseInt(target.attributes['maxlength'].value, 10);
+    var myLength = target.value.length;
+    if (myLength >= maxLength) {
+        var next = target;
+        while ((next = next.nextElementSibling)) {
+        if (next == null) break;
+        if (next.tagName.toLowerCase() === 'input') {
+            next.focus();
+            break;
+        }
+        }
+    }
+    // Move to previous field if empty (user pressed backspace)
+    else if (myLength === 0) {
+        var previous = target;
+        while ((previous = previous.previousElementSibling)) {
+        if (previous == null) break;
+        if (previous.tagName.toLowerCase() === 'input') {
+            previous.focus();
+            break;
+        }
+        }
+    }
+    };
+</script>
+{% endblock body %}

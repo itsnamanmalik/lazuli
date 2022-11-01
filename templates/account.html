@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<main class="mh-80">
+    <section id="user-details">
+        <div class="container px-md-5 px-4">
+            <div class="row gap-3 my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card p-2 border-0 shadow">
+                        <div class="card-body text-center">
+                            <img src="{% static 'website/images/user.png' %}" class="img-fluid mb-3 bg-light" alt="" />
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="logout" value="true" />
+                                <button class="btn btn-outline-secondary w-100 rounded-2" type="submit">
+                                    LOGOUT
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow mt-3 p-0 d-none d-md-block">
+                        <p class="fw-400 text-center mt-3 mb-0">Download the App</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.getfixed.app" target="_blank"><img src="{% static 'website/images/google-play-badge.png' %}" class="img-fluid"
+                                alt="" /></a>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 p-2 bg-white shadow">
+                    <div class="d-flex justify-content-around align-content-center border-bottom overflow-auto">
+                        <div class="item px-2 d-flex py-2 border-bottom-gray justify-content-center align-items-center" role="button"
+                            id="item-3">
+                            <i class="fas fa-user-edit ored fs-1 mx-2"></i><span href=""
+                                class="small text-dark fw-500 d-none d-md-block">Edit Profile</span>
+                        </div>
+                        <div class="item px-2 d-flex py-2 justify-content-center align-items-center" role="button"
+                            id="item-2">
+                            <i class="fas fa-address-card blue fs-1 mx-2"></i><span href=""
+                                class="small text-dark fw-500 d-none d-md-block">My Addresses</span>
+                        </div>
+                        <div class="item px-2 d-flex py-2 justify-content-center align-items-center"
+                            role="button" id="item-1">
+                            <i class="fas fa-wallet dblue fs-1 mx-2"></i><span href=""
+                                class="small text-dark fw-500 d-none d-md-block">My Wallet</span>
+                        </div>
+                        
+                    </div>
+
+                    <div class="py-3 px-2 text-center text-danger d-none mt-4" id="wallet">
+                        <span class="display-6"><span style="font-family: sans-serif">₹</span>{{user.wallet}}</span>
+                    </div>
+
+                    <div class="py-3 pt-1 px-2 text-center d-none mt-4" id="addresses">
+                        <div class="mb-4 px-3 text-start">
+                            <ul class="list-group list-group">
+                                {% for address in user.address.all %} <div class="shadow my-2 rounded-3 p-3 text-start">
+                                    {{address.address}}
+                                </div>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+
+                        <div class="px-2 py-4 text-white shadow w-75 mx-auto rounded-3 bg-ored hov-transition-sm" data-bs-target="#addModal" data-bs-toggle="modal" role="button">
+                            ADD NEW
+                        </div>
+                    </div>
+
+                    <div class="py-3 px-md-2 px-1 text-center mt-4 w-70 mx-auto overflow-auto" id="edit-profile">
+                        <form method="post" class="mx-auto">
+                        {% csrf_token %}
+                            <div class="form-floating mb-3">
+                            {% if user.name == None %}
+                            <input type="text" class="form-control" required id="floatingInput1" placeholder="Name"
+                                    name="name" />
+                            {% else %}
+                            <input type="text" class="form-control" required id="floatingInput1" placeholder="Name"
+                                    name="name" value="{{user.name}}" />
+                            {% endif %}
+                                
+                                
+                                <label for="floatingInput">Your Name*</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                            {% if user.email == None %}
+                                <input type="email" class="form-control" required name="email" placeholder="name@example.com" />
+                            {% else %}
+                                <input type="email" class="form-control" required
+                                    value="{{user.email}}" name="email" placeholder="name@example.com" />
+                            {% endif %}
+                                <label for="floatingInput">Email address*</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                            {% if user.date_of_birth == None %}
+                                <input type="date" class="form-control" name="dob" placeholder="DOB" />
+                            {% else %}
+                              <input type="text" class="form-control" readonly value="{{user.date_of_birth}}" />
+                            {% endif %}
+                                
+
+                                <label for="floatingInput">Date of Birth (Optional)</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                            {% if user.gst == None %}
+                                <input type="text" class="form-control" name="gst" placeholder="GST No." />
+                            {% else %}
+                                <input type="text" class="form-control"
+                                    value="{{user.gst}}" name="gst" placeholder="GST No." />
+                            {% endif %}
+                                <label for="floatingInput">GST No. (Optional)</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" readonly value="{{user.phone}}" />
+                                <label for="floatingPassword">Phone</label>
+                            </div>
+
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" readonly value="{{user.user_id}}" />
+                                <label for="floatingPassword">Referral Code</label>
+                            </div>
+
+                            <br />
+                            <button type="submit" class="btn btn-purple px-4 px-lg-5 mt-1 rounded-2 text-white shadow">
+                                UPDATE PROFILE
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL -->
+            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog border-0">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <h4 class="modal-title" id="exampleModalLabel">
+                                Add New Address
+                            </h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" class="mx-auto">
+                            {% csrf_token %}
+                                <div class="mb-3 d-flex">
+                                    <label for="address" class="form-label mb-0 w-25 mt-2">Address</label>
+                                    <textarea name="address" type="text" value="" placeholder="New address"
+                                        class="form-control mt-0 w-75 bbf" id="address"></textarea>
+                                </div>
+                                  <div class="modal-footer border-0">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" class="btn btn-purple text-white px-4">
+                                Add
+                            </button>
+                        </div>
+                            </form>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock body %}
