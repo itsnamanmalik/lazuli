@@ -41,12 +41,8 @@ class Login(View):
             return redirect('account')
         except KeyError:
             pass
-        all_city = City.objects.all()
-        try:
-            location = request.session['city'] +' - '+request.session['pincode']
-        except KeyError:
-            location = 'Location'
-        context = {'all_city':all_city,'location':location,'otp_sent':False,'phone':''}
+
+        context = {'otp_sent':False,'phone':''}
         return render(request,'login.html',context)
     def post(self, request):
         try:
@@ -54,11 +50,6 @@ class Login(View):
             return redirect('account')
         except KeyError:
             pass
-        all_city = City.objects.all()
-        try:
-            location = request.session['city'] +' - '+request.session['pincode']
-        except KeyError:
-            location = 'Location'
         c_phone = request.POST.get('phone')
         otp_p1 = request.POST.get('otp_p1')
         otp_p2 = request.POST.get('otp_p2')
@@ -75,7 +66,7 @@ class Login(View):
                 }
                 fire_and_forget(url="https://www.fast2sms.com/dev/bulkV2", headers=headers, querystring=querystring)
                 request.session['otp:'+str(c_phone)] = OTP_SENT
-                context = {'all_city':all_city,'location':location,'otp_sent':True,'phone':c_phone}
+                context = {'otp_sent':True,'phone':c_phone}
                 messages.success(request,"OTP Sent on your phone!!")
                 return render(request,'login.html',context)
         elif otp_p1 and otp_p2 and otp_p3 and otp_p4 and otp_p5 and otp_p6 and c_phone:      
@@ -84,10 +75,10 @@ class Login(View):
                 otp_sent = request.session['otp:'+str(c_phone)]
                 if otp_sent == otp:
                     try:
-                        user = User.objects.get(phone='+91'+str(c_phone))
+                        user = User.objects.get(phone=str(c_phone))
                     except User.DoesNotExist:
-                        User.objects.create(phone='+91'+str(c_phone),user_id=get_random_alphanumeric_string(3,3))
-                        user = User.objects.get(phone='+91'+str(c_phone))
+                        User.objects.create(phone=str(c_phone))
+                        user = User.objects.get(phone=str(c_phone))
                     request.session['phone'] = str(user.phone)
                     messages.success(request,"Logedin Successfully!!")
                     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
@@ -102,6 +93,61 @@ class Login(View):
                 messages.error(request,"Invalid OTP!!")
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+class Account(View):
+    def get(self, request):
+        try:
+            phone = request.session['phone']
+            try:
+                user = User.objects.prefetch_related('address').get(phone=phone)
+            except User.DoesNotExist:
+                del request.session['phone']
+                return redirect('login')       
+        except KeyError:
+            return redirect('login')
+        context = {'user':user}
+        return render(request,'account.html',context)
+    def post(self, request):
+        logout = request.POST.get('logout','false')
+        address = request.POST.get('address')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        date_of_birth = request.POST.get('dob')
+        gst = request.POST.get('gst')
+        if logout == 'true':
+            try:
+                del request.session['phone']
+            except KeyError:
+                pass
+            messages.success(request,"Logedout Successfully!!")
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        elif address:
+            messages.success(request,"Address Added Successfully!!")
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))    
+
+        elif name and email:
+            try:
+                phone = request.session['phone']
+                try:
+                    user = User.objects.get(phone=phone)
+                except User.DoesNotExist:
+                    del request.session['phone']
+                    return redirect('login')       
+            except KeyError:
+                return redirect('login')
+            if name:
+                user.name = name
+            if email:
+                user.email = email
+            if date_of_birth:
+                user.date_of_birth = date_of_birth
+            user.save()
+            messages.success(request,"User Profile Updated!!")
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))    
+        messages.error(request,"Invalid Request!!")
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        
 
 
 class DeployCashback(View):

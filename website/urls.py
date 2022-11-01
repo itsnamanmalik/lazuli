@@ -8,4 +8,6 @@ urlpatterns = [
         path('deals/', Deals.as_view(),name="deals"),
         path('deploy-cashback/', DeployCashback.as_view(),name="deploycash"),
         path('login/', Login.as_view(),name="login"),
+        path('account/', Account.as_view(), name='account'),
+
 ]
