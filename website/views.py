@@ -100,7 +100,7 @@ class Account(View):
         try:
             phone = request.session['phone']
             try:
-                user = User.objects.prefetch_related('address').get(phone=phone)
+                user = User.objects.get(phone=phone)
             except User.DoesNotExist:
                 del request.session['phone']
                 return redirect('login')       
