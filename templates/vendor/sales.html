@@ -46,6 +46,8 @@
                   <th>Phone</th>
                   <th>Product Name</th>
                   <th>Amount</th>
+                  <th>Marketing Fee Paid</th>              
+                  <th>Cashback Paid</th>
                   <th>Date Time</th>
                 </tr>
                 </thead>
@@ -56,7 +58,9 @@
                   <td>{{sale.user.name}}</td>
                   <td>{{sale.user.phone}}</td>
                   <td>{{sale.product_name}}</td>
-                  <td> {{sale.total_amount}}</td>
+                  <td>{{sale.total_amount}}</td>
+                  <td>{{sale.marketing_fee_paid}}</td>
+                  <td>{{sale.cashback_given}}</td>
                   <td>{{sale.date_created}}</td>
                 </tr>
                 {% endfor %}

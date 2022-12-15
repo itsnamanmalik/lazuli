@@ -39,7 +39,7 @@
         <div class="links d-flex-flex-column align-items-center mt-1">
             <ul>
                 <li class="fs-5 mb-3">
-                    <a href="/">
+                    <a href="{% url 'index' %}">
                         <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
                             <ion-icon size="large" name="home-outline" class="me-3"></ion-icon>
                             <span class="mt-1">Home</span>
@@ -47,7 +47,7 @@
                     </a>
                 </li>
                 <li class="fs-5 mb-3">
-                    <a href="allStores.html">
+                    <a href="#">
                         <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
                             <ion-icon size="large" name="ellipsis-horizontal-circle-outline" class="me-3"></ion-icon>
                             <span class="mt-1">About</span>
@@ -55,7 +55,7 @@
                     </a>
                 </li>
                 <li class="fs-5 mb-3">
-                    <a href="stores.html">
+                    <a href="{% url 'stores' %}">
                         <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
                             <ion-icon size="large" name="cart-outline" class="me-3"></ion-icon>
                             <span class="mt-1">Stores</span>
@@ -63,7 +63,7 @@
                     </a>
                 </li>
                 <li class="fs-5 mb-3">
-                    <a href="search_res.html">
+                    <a href="#">
                         <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
                             <ion-icon size="large" name="grid-outline" class="me-3"></ion-icon>
                             <span class="mt-1">Categories</span>
@@ -71,15 +71,7 @@
                     </a>
                 </li>
                 <li class="fs-5 mb-3">
-                    <a href="#">
-                        <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
-                            <ion-icon name="cash-outline" size="large" class="me-3"></ion-icon>
-                            <span class="mt-1">Coupons and Deals</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="fs-5 mb-3">
-                    <a href="allDeals.html">
+                    <a href="{% url 'deals' %}">
                         <div class="d-flex w-100 fw-500 p-1 rounded-left-lg">
                             <ion-icon size="large" name="wallet-outline" class="me-3"></ion-icon>
                             <span class="mt-1">Best Deals</span>

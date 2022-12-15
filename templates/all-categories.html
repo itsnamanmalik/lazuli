@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<section id="results">
+    <div class="container p-2 p-lg-3">
+        <div class="text-center mb-md-4 my-3">
+            <h2 class="text-center wt text-dark fw-600">All Categories</h2>
+            <p class="lead text-secondary fw-500">{{count}} Results</p>
+        </div>
+
+        <div class="row g-4">
+
+            {% for category in all_categories %}
+
+            <div class="col-lg-3 col-md-4 hov-trans">
+                <a href="#">
+                    <div class="carousel-cell m-2 mx-3">
+                        <div class="item bg-white p-3 text-center shadow-sm rounded-md border icon-div">
+                            <p class="fw-600 mb-3 fs-5">{{category.name}}</p>
+                            <img src="{{category.image.url}}" class="img-fluid rounded-3" alt="" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">«Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">Next»</span>
+                        </a>
+                    </li>
+                </ul>
+        </div>
+        
+    </div>
+</section>
+
+{% endblock body %}

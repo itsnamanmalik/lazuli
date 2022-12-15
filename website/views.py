@@ -184,6 +184,15 @@ class Deals(View):
         return render(request,'all-deals.html',context)
     
        
+            
+class Categories(View):
+    def get(self, request):
+        all_categories = DealsCoupon.objects.all()
+        count = all_categories.count()
+        context = {"all_categories": all_categories,"count": count}
+        return render(request,'all-categories.html',context)
+    
+       
         
 class Stores(View):
     def get(self, request):
