@@ -153,4 +153,26 @@
     </section>
 </main>
 
+<script>
+// USER PROFILE
+var wallet = document.getElementById('wallet');
+var editProfile = document.getElementById('edit-profile');
+var item1 = document.getElementById('item-1');
+var item3 = document.getElementById('item-3');
+
+item1.addEventListener('click', () => {
+wallet.classList.remove('d-none');
+editProfile.classList.add('d-none');
+item1.classList.add('border-bottom-gray');
+item3.classList.remove('border-bottom-gray');
+});
+
+item3.addEventListener('click', () => {
+wallet.classList.add('d-none');
+editProfile.classList.remove('d-none');
+item3.classList.add('border-bottom-gray');
+item1.classList.remove('border-bottom-gray');
+});
+</script>
+
 {% endblock body %}
