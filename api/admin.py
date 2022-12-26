@@ -104,10 +104,15 @@ class VendorAdmin(admin.ModelAdmin):
 class VedorCommissionsTransactionAdmin(admin.ModelAdmin):
     list_display = ('vendor','total_amount','payment_status','date_created','last_edited')
     list_filter = ('vendor','payment_status',)
-    
+
+class VendorSaleAdminResource(resources.ModelResource):
+    class Meta:
+        model = VendorSale
+        fields = ('vendor__name','user__name','product_name','total_amount','after_sale_total','marketing_fee_paid','cashback_given','date_created','last_edited',)
 
 @admin.register(VendorSale)
 class VendorSaleAdmin(ExportMixin,admin.ModelAdmin):
+    resource_class = VendorSaleAdminResource
     list_display = ('vendor','user','product_name','total_amount','after_sale_total','marketing_fee_paid','date_created','last_edited')
     list_filter = ('vendor','user',)   
 
