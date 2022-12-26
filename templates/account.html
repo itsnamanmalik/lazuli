@@ -90,7 +90,7 @@
                                 <label for="floatingInput">Email address*</label>
                             </div>
                             <div class="form-floating mb-3">
-                            {% if user.date_of_birth == None %}
+                                {% if user.date_of_birth == None %}
                                 <input type="date" class="form-control" name="dob" placeholder="DOB" />
                             {% else %}
                               <input type="text" class="form-control" readonly value="{{user.date_of_birth}}" />
@@ -101,6 +101,26 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" readonly value="{{user.phone}}" />
                                 <label for="floatingPassword">Phone</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                {% if user.account_number == None %}
+                                <input type="text" class="form-control" name="account_number" placeholder="Account Number" />
+                            {% else %}
+                              <input type="text" class="form-control" readonly value="{{user.account_number}}" />
+                            {% endif %}
+                                <label for="floatingInput">Account Number</label>
+                            </div>
+
+
+
+                            <div class="form-floating mb-3">
+                                {% if user.ifsc_code == None %}
+                                <input type="text" class="form-control" name="ifsc_code" placeholder="IFSC Code" />
+                            {% else %}
+                              <input type="text" class="form-control" readonly value="{{user.ifsc_code}}" />
+                            {% endif %}
+                                <label for="floatingInput">IFSC Number</label>
                             </div>
 
                             {% comment %} <div class="form-floating mt-3">

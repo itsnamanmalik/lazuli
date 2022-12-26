@@ -114,7 +114,9 @@ class Account(View):
         name = request.POST.get('name')
         email = request.POST.get('email')
         date_of_birth = request.POST.get('dob')
-        gst = request.POST.get('gst')
+        account_number = request.POST.get('account_number')
+        ifsc_code = request.POST.get('ifsc_code')
+        
         if logout == 'true':
             try:
                 del request.session['phone']
@@ -142,6 +144,10 @@ class Account(View):
                 user.email = email
             if date_of_birth:
                 user.date_of_birth = date_of_birth
+            if account_number:
+                user.account_number = account_number
+            if ifsc_code:
+                user.ifsc_code = ifsc_code
             user.save()
             messages.success(request,"User Profile Updated!!")
             return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))    

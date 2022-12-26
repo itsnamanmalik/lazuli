@@ -12,6 +12,8 @@ class User(models.Model):
     # user_id = models.CharField(max_length=20, null=False, blank=False)
     referral_id = models.CharField(max_length=20, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
+    account_number = models.CharField(null=True, blank=True,max_length=20)
+    ifsc_code = models.CharField(null=True, blank=True,max_length=50)
     notification_id = models.CharField(max_length=500, default="",null=False, blank=True)
     date_joined	= models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_login = models.DateTimeField(auto_now=True,null=True, blank=True)
