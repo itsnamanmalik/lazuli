@@ -93,7 +93,7 @@
                                 {% if user.date_of_birth == None %}
                                 <input type="date" class="form-control" name="dob" placeholder="DOB" />
                             {% else %}
-                              <input type="text" class="form-control" readonly value="{{user.date_of_birth}}" />
+                              <input type="text" class="form-control" name="dob" readonly value="{{user.date_of_birth}}" />
                             {% endif %}
                                 <label for="floatingInput">Date of Birth (Optional)</label>
                             </div>
@@ -107,7 +107,7 @@
                                 {% if user.account_number == None %}
                                 <input type="text" class="form-control" name="account_number" placeholder="Account Number" />
                             {% else %}
-                              <input type="text" class="form-control" value="{{user.account_number}}" />
+                              <input type="text" class="form-control" name="account_number" value="{{user.account_number}}" />
                             {% endif %}
                                 <label for="floatingInput">Account Number</label>
                             </div>
@@ -118,7 +118,7 @@
                                 {% if user.ifsc_code == None %}
                                 <input type="text" class="form-control" name="ifsc_code" placeholder="IFSC Code" />
                             {% else %}
-                              <input type="text" class="form-control" value="{{user.ifsc_code}}" />
+                              <input type="text" class="form-control" name="ifsc_code" value="{{user.ifsc_code}}" />
                             {% endif %}
                                 <label for="floatingInput">IFSC Number</label>
                             </div>
