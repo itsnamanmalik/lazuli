@@ -13,8 +13,6 @@ from rest_framework.authtoken.models import TokenProxy
 from import_export.admin import ExportMixin
 from import_export import resources
 from rangefilter.filters import DateRangeFilter, DateTimeRangeFilter
-from import_export.admin import ExportMixin
-from import_export import resources
 
 admin.site.site_header='Lazuli'
 admin.site.site_title = 'Lazuli'
@@ -109,7 +107,7 @@ class VedorCommissionsTransactionAdmin(admin.ModelAdmin):
     
 
 @admin.register(VendorSale)
-class VendorSaleAdmin(admin.ModelAdmin):
+class VendorSaleAdmin(ExportMixin,admin.ModelAdmin):
     list_display = ('vendor','user','product_name','total_amount','after_sale_total','marketing_fee_paid','date_created','last_edited')
     list_filter = ('vendor','user',)   
 
