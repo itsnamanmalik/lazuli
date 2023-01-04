@@ -89,9 +89,17 @@ class ProductAdmin(admin.ModelAdmin):
 class CashbackRequestAdmin(admin.ModelAdmin):
     list_display = ('user','status','request_date_time')
     
+class WithdrawlRequestAdminResource(resources.ModelResource):
+    class Meta:
+        model = WithdrawlRequest
+        fields = ('payment_type','user__name','user__account_number','user__bank_name','user__email','user__ifsc_code','amount','request_date_time',)
+
+    def payment_type():
+        return "NEFT"
 
 @admin.register(WithdrawlRequest)
-class WithdrawlRequestAdmin(admin.ModelAdmin):
+class WithdrawlRequestAdmin(ExportMixin,admin.ModelAdmin):
+    resource_class = WithdrawlRequestAdminResource
     list_display = ('user','amount','status','request_date_time')
     
 

@@ -60,7 +60,15 @@ class Login(View):
         if c_phone and not otp_p1 and not otp_p2 and not otp_p3 and not otp_p4 and not otp_p5 and not otp_p6:
             if len(c_phone) == 10 and c_phone.isnumeric():
                 OTP_SENT = get_random_alphanumeric_string(0,6)
-                querystring = {"authorization":"RU8HVru1LvMt0xF4hKcgIZdNa6pBEOo3y9DXfze2GTA5WisCQSAvBUTxErYfXgnoiumcOQFwRtJ5W2Ms","sender_id":"TXTIND","message":"Your Get Fixed Verification Code is: "+OTP_SENT,"language":"english","flash":"0","route":"v3","numbers":c_phone}
+                querystring = {
+                    "authorization":"RU8HVru1LvMt0xF4hKcgIZdNa6pBEOo3y9DXfze2GTA5WisCQSAvBUTxErYfXgnoiumcOQFwRtJ5W2Ms",
+                    "sender_id":"TXTIND",
+                    "message":"Your Lazuli Verification Code is: "+OTP_SENT,
+                    "language":"english",
+                    "flash":"0",
+                    "route":"v3",
+                    "numbers":c_phone
+                    }
                 headers = {
                     'cache-control': "no-cache"
                 }
