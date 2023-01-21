@@ -32,6 +32,10 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Brand)
 
 
+
+class CashbackCreditErrorAdmin(admin.StackedInline):
+    model = CashbackCreditError
+
 class UserCashbackLevelAdmin(admin.StackedInline):
     model = UserCashbackLevel    
 
