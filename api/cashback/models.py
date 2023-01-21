@@ -12,3 +12,11 @@ class CashbackLevel(models.Model):
     last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     def __str__(self):
         return str(self.name)
+
+class CashbackCreditError(models.Model):
+    exception_message = models.TextField(blank=True,null=True)
+    date_created	= models.DateTimeField(auto_now_add=True,null=True, blank=True)
+    last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
+    def __str__(self):
+        return str(self.name)
+
