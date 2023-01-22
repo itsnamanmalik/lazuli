@@ -33,8 +33,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Brand)
 
-
-
+def mark_status_approved(self, request, queryset):
+    for obj in queryset:
+        obj.status = 'approved'
+        obj.save()
 
 class UserCashbackLevelAdmin(admin.StackedInline):
     model = UserCashbackLevel    
@@ -103,6 +105,7 @@ class WithdrawlRequestAdminResource(resources.ModelResource):
 class WithdrawlRequestAdmin(ExportMixin,admin.ModelAdmin):
     resource_class = WithdrawlRequestAdminResource
     list_display = ('user','amount','status','request_date_time')
+    actions = [mark_status_approved]
     
 
 @admin.register(Vendor)
