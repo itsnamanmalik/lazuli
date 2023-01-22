@@ -25,7 +25,7 @@ admin.site.register(CustomUser, UserAdmin)
 admin.site.register(SliderLocation)
 admin.site.register(Slider)
 
-admin.site.register(CashbackCreditError)
+admin.site.register(TransactionError)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
