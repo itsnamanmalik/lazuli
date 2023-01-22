@@ -10,7 +10,7 @@ from api.users.models import User
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
-from api.cron import credit_cashback
+from api.cron import credit_cashback, create_withdrawl_request
 
 import random
 import string
@@ -166,8 +166,20 @@ class Account(View):
 
 class DeployCashback(View):
     def get(self, request):
-        credit_cashback()
+        if request.user:
+            if request.user.is_superuser:
+                credit_cashback()
+                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        
+class WithdrawCashback(View):
+    def get(self, request):
+        if request.user:
+            if request.user.is_superuser:
+                create_withdrawl_request()
+                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
 
 
 

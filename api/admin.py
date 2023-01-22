@@ -25,6 +25,8 @@ admin.site.register(CustomUser, UserAdmin)
 admin.site.register(SliderLocation)
 admin.site.register(Slider)
 
+admin.site.register(CashbackCreditError)
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name','parent_category')
@@ -33,8 +35,6 @@ admin.site.register(Brand)
 
 
 
-class CashbackCreditErrorAdmin(admin.StackedInline):
-    model = CashbackCreditError
 
 class UserCashbackLevelAdmin(admin.StackedInline):
     model = UserCashbackLevel    

@@ -1,5 +1,4 @@
 from django.db import models
-from pkg_resources import require
 
 
 class CashbackLevel(models.Model):
@@ -13,7 +12,7 @@ class CashbackLevel(models.Model):
     def __str__(self):
         return str(self.name)
 
-class CashbackCreditError(models.Model):
+class TransactionError(models.Model):
     exception_message = models.TextField(blank=True,null=True)
     date_created	= models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)

@@ -1,8 +1,9 @@
 from django.db.models import F
 from django.db import IntegrityError
-from api.users.models import UserCashbackLevel, UserWalletTransaction
+from api.users.models import UserCashbackLevel, UserWalletTransaction, User
 from api.vendors.models import VendorSale
-from api.cashback.models import CashbackLevel,CashbackCreditError
+from api.customer_requests.models import WithdrawlRequest
+from api.cashback.models import CashbackLevel,TransactionError
 from django.db.models import Sum
 from django.db import transaction
 
@@ -50,5 +51,15 @@ def credit_cashback():
                     user_transaction.save()
             VendorSale.objects.filter(cashback_credited_once=False).update(cashback_credited_once=True)
     except Exception as ex:
-        CashbackCreditError.objects.create(exception_message=str(ex))
+        TransactionError.objects.create(exception_message=str(ex))
         
+
+
+def create_withdrawl_request():
+    try:
+        with transaction.atomic():
+            all_user = User.objects.filter(wallet__gt = 0)
+            for user in all_user:
+                WithdrawlRequest.objects.create(user=user,amount=user.wallet)
+    except Exception as ex:
+        TransactionError.objects.create(exception_message=str(ex))

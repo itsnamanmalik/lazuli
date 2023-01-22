@@ -2,7 +2,6 @@ from django.db import models
 from datetime import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.db.models import Sum
 
 class User(models.Model):
     name = models.CharField(blank=True,null=True,max_length=50)
@@ -79,11 +78,13 @@ def update_balance(sender, instance, created, **kwargs):
         if instance.cashback_level:
             instance.is_cashback_transaction = True
             instance.save()
-            total_sale_cashback = UserWalletTransaction.objects.filter(cashback_level__sale = instance.cashback_level.sale).aggregate(Sum('cashback_level__given_cashback'))['cashback_level__given_cashback__sum']
-            instance.cashback_level.sale.cashback_given = total_sale_cashback
-            instance.cashback_level.sale.save()
-            if total_sale_cashback >= instance.cashback_level.sale.total_amount:
-                instance.cashback_level.sale.full_cashback_credited = True
-                instance.cashback_level.sale.save()
                 
 
+@receiver(post_save, sender=UserCashbackLevel)
+def update_sale_balance(sender, instance, created, **kwargs):
+    instance.sale.cashback_given = instance.given_cashback
+    instance.sale.save()
+    if instance.given_cashback >= instance.sale.total_amount:
+        instance.sale.full_cashback_credited = True
+        instance.sale.save()
+            
