@@ -12,6 +12,8 @@ def credit_cashback():
     try:
         with transaction.atomic():
             all_vendors_for_cashback = VendorSale.objects.filter(cashback_credited_once=False)
+            if all_vendors_for_cashback.count() == 0:
+                return
             total_revenue = all_vendors_for_cashback.aggregate(Sum('total_amount'))['total_amount__sum']
             total_profit = 0
             for vendor_cash in all_vendors_for_cashback:
@@ -47,8 +49,9 @@ def credit_cashback():
                         level_user_cashback.save()
                     breakdown_last = breakdown_last+"\nAfter checking if Total cashback for this sale is greater than sale amount or level percent of sale amount: "+str(single_cashback_amount)
                     final_breakdown = breakdown_init+"\n\n"+breakdown_last
-                    user_transaction = UserWalletTransaction(user=level_user_cashback.user,transaction_type='credited',cashback_level=level_user_cashback,amount=(single_cashback_amount),paid_for='Cashback For Purchase',transaction_breakdown=final_breakdown)
-                    user_transaction.save()
+                    if single_cashback_amount > 0:
+                        user_transaction = UserWalletTransaction(user=level_user_cashback.user,transaction_type='credited',cashback_level=level_user_cashback,amount=(single_cashback_amount),paid_for='Cashback For Purchase',transaction_breakdown=final_breakdown)
+                        user_transaction.save()
             VendorSale.objects.filter(cashback_credited_once=False).update(cashback_credited_once=True)
     except Exception as ex:
         TransactionError.objects.create(exception_message=str(ex))
