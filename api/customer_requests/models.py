@@ -38,14 +38,10 @@ def update_wallet_balance(sender, instance, **kwargs):
     try:
         old_instance = WithdrawlRequest.objects.get(id=instance.id)
     except WithdrawlRequest.DoesNotExist:
+        user_transaction = UserWalletTransaction(user=instance.user,transaction_type='debited',amount=instance.amount,paid_for='Withdrawl Requested')
+        user_transaction.save()
         return None      
-    
-    if old_instance.status == 'pending' and instance.status == 'approved':
-        if old_instance.user.wallet >= old_instance.amount:
-            user_transaction = UserWalletTransaction(user=old_instance.user,transaction_type='debited',amount=old_instance.amount,paid_for='Withdrawl Requested')
-            user_transaction.save()
-        else:
-            instance.status = 'pending'
+            
     if old_instance.status == 'approved' and instance.status == 'pending':
         instance.status = 'approved'
         
