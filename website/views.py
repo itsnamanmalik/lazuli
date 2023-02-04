@@ -169,6 +169,7 @@ class DeployCashback(View):
         if request.user:
             if request.user.is_superuser:
                 credit_cashback()
+                messages.success(request,"Cashback credited!!")
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         
@@ -177,6 +178,7 @@ class WithdrawCashback(View):
         if request.user:
             if request.user.is_superuser:
                 create_withdrawl_request()
+                messages.success(request,"Withdrawl request created!!")
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
