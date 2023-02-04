@@ -6,6 +6,7 @@ from api.users.models import UserWalletTransaction
 STATUS = (
     ("pending", "pending"), 
     ("approved", "approved"), 
+    ("cancelled", "cancelled"), 
 )
 
 
@@ -24,7 +25,7 @@ class CashbackRequest(models.Model):
     
 class WithdrawlRequest(models.Model):
     user = models.ForeignKey(to='users.User',on_delete=models.CASCADE)
-    amount = models.FloatField(null=False, blank=False)
+    amount = models.FloatField(null=False, blank=False, editable=False)
     status = models.CharField(max_length=10, choices=STATUS, default='pending') 
     request_date_time = models.DateTimeField(auto_now_add=True,null=True, blank=True)
     def __str__(self):
@@ -41,7 +42,12 @@ def update_wallet_balance(sender, instance, **kwargs):
         user_transaction = UserWalletTransaction(user=instance.user,transaction_type='debited',amount=instance.amount,paid_for='Withdrawl Requested')
         user_transaction.save()
         return None      
-            
-    if old_instance.status == 'approved' and instance.status == 'pending':
-        instance.status = 'approved'
+        
+
+    if old_instance.status == 'cancelled' or old_instance.status == 'approved':
+        instance.status = old_instance.status
+        
+    if old_instance.status == 'pending' and instance.status == 'cancelled':
+        user_transaction = UserWalletTransaction(user=instance.user,transaction_type='credited',amount=instance.amount,paid_for='Withdrawl Requested Cancelled')
+        user_transaction.save()
         
