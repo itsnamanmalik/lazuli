@@ -72,6 +72,8 @@ def update_cashback(created,instance):
         for vendor in before_vendors:
             vendor.after_sale_total = vendor.after_sale_total+instance.total_amount
             vendor.save()
+        instance.marketing_fee_percentage = instance.vendor.commission_percentage
+        instance.save()
     else:
         all_cashback_levels = CashbackLevel.objects.all()
         for cashback_level in all_cashback_levels:
