@@ -40,6 +40,7 @@ class VendorSale(models.Model):
     cashback_given = models.FloatField(null=False,blank=False,default=0)
     full_cashback_credited = models.BooleanField(null=False,blank=False,default=False)
     cashback_credited_once = models.BooleanField(null=False,blank=False,default=False)
+    marketing_fee_percentage = models.FloatField(null=False, blank=False, default=0)
     date_created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     def save(self, *args, **kwargs):

@@ -121,7 +121,7 @@ class VendorAdmin(admin.ModelAdmin):
         all_pending_sale = VendorSale.objects.filter(vendor=obj,marketing_fee_paid=False)
         maketing = 0
         for pending_sale in all_pending_sale:
-            maketing = maketing + ((pending_sale.total_amount * pending_sale.vendor.commission_percentage)/100)
+            maketing = maketing + ((pending_sale.total_amount * pending_sale.marketing_fee_percentage)/100)
         return maketing
     
 
