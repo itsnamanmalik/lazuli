@@ -37,6 +37,10 @@ def mark_status_approved(self, request, queryset):
     for obj in queryset:
         obj.status = 'approved'
         obj.save()
+def mark_status_cancelled(self, request, queryset):
+    for obj in queryset:
+        obj.status = 'cancelled'
+        obj.save()
 
 class UserCashbackLevelAdmin(admin.StackedInline):
     model = UserCashbackLevel    
@@ -105,7 +109,8 @@ class WithdrawlRequestAdminResource(resources.ModelResource):
 class WithdrawlRequestAdmin(ExportMixin,admin.ModelAdmin):
     resource_class = WithdrawlRequestAdminResource
     list_display = ('user','amount','status','request_date_time')
-    actions = [mark_status_approved]
+    actions = [mark_status_approved,mark_status_cancelled]
+    list_filter = ('status',)
     
 
 @admin.register(Vendor)
@@ -126,6 +131,7 @@ class VendorSaleAdminResource(resources.ModelResource):
 @admin.register(VendorSale)
 class VendorSaleAdmin(ExportMixin,admin.ModelAdmin):
     resource_class = VendorSaleAdminResource
+    search_fields = ('product_name',)
     list_display = ('vendor','user','product_name','total_amount','after_sale_total','marketing_fee_paid','date_created','last_edited')
     list_filter = ('vendor','user',)   
 
