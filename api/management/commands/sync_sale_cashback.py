@@ -9,7 +9,8 @@ class Command(BaseCommand):
         all_sale = VendorSale.objects.all()
         for sale in all_sale:
             amount_paid = UserWalletTransaction.objects.filter(cashback_level__sale=sale,transaction_type='credited').aggregate(Sum('amount'))['amount__sum']
-            sale.cashback_given = amount_paid
-            sale.save()
+            if amount_paid:
+                sale.cashback_given = amount_paid
+                sale.save()
             print("Sale cashback Synced!!! "+str(sale))
 
