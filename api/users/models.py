@@ -80,11 +80,3 @@ def update_balance(sender, instance, created, **kwargs):
             instance.save()
                 
 
-@receiver(post_save, sender=UserCashbackLevel)
-def update_sale_balance(sender, instance, created, **kwargs):
-    instance.sale.cashback_given = instance.given_cashback
-    instance.sale.save()
-    if instance.given_cashback >= instance.sale.total_amount:
-        instance.sale.full_cashback_credited = True
-        instance.sale.save()
-            
