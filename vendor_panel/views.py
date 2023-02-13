@@ -24,11 +24,12 @@ class Dashboard(View):
         else:
             saletotal = 0
         total_users = User.objects.all().count()
-        total_sum = allsales.filter(marketing_fee_paid=False).aggregate(Sum('total_amount'))['total_amount__sum']
-        if total_sum:
-            marketing_fee_pending = ((total_sum)*vendor.commission_percentage)/100
-        else:
-            marketing_fee_pending = 0
+ 
+        all_pending_sale = VendorSale.objects.filter(vendor=vendor,marketing_fee_paid=False)
+        marketing_fee_pending = 0
+        for pending_sale in all_pending_sale:
+            marketing_fee_pending = marketing_fee_pending + ((pending_sale.total_amount * pending_sale.vendor.commission_percentage)/100)
+
         context = {'vendor': vendor,'saletotal':saletotal,'salecount':salecount,'total_users':total_users,'marketing_fee_pending':marketing_fee_pending}    
         return render(request,'vendor/dashboard.html',context)
     
@@ -81,12 +82,11 @@ class MarketingFee(View):
             vendor = Vendor.objects.get(phone=phone)
         except Vendor.DoesNotExist:
             return redirect('vendor-logout')
-        allsales = VendorSale.objects.filter(vendor=vendor)
-        total_ammount = allsales.filter(marketing_fee_paid=False).aggregate(Sum('total_amount'))['total_amount__sum']
-        if total_ammount:
-            marketing_fee_pending = ((total_ammount)*vendor.commission_percentage)/100
-        else:
-            marketing_fee_pending = 0 
+        all_pending_sale = VendorSale.objects.filter(vendor=vendor,marketing_fee_paid=False)
+        marketing_fee_pending = 0
+        for pending_sale in all_pending_sale:
+            marketing_fee_pending = marketing_fee_pending + ((pending_sale.total_amount * pending_sale.vendor.commission_percentage)/100)
+
         alltransaction = VedorCommissionsTransaction.objects.filter(vendor=vendor)
         context = {'vendor': vendor,"alltransaction":alltransaction,"marketing_fee_pending":marketing_fee_pending}    
         return render(request,'vendor/marketing.html',context)

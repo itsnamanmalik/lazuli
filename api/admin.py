@@ -110,7 +110,14 @@ class WithdrawlRequestAdmin(ExportMixin,admin.ModelAdmin):
 
 @admin.register(Vendor)
 class VendorAdmin(admin.ModelAdmin):
-    list_display = ('name','business_name','phone')
+    list_display = ('name','business_name','phone','marketing_fee_pending')
+
+    def marketing_fee_pending(self, obj):
+        all_pending_sale = VendorSale.objects.filter(vendor=obj,marketing_fee_paid=False)
+        maketing = 0
+        for pending_sale in all_pending_sale:
+            maketing = maketing + ((pending_sale.total_amount * pending_sale.vendor.commission_percentage)/100)
+        return maketing
     
 
 @admin.register(VedorCommissionsTransaction)
