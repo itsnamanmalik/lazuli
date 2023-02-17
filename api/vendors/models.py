@@ -40,7 +40,7 @@ class VendorSale(models.Model):
     cashback_given = models.FloatField(null=False,blank=False,default=0)
     full_cashback_credited = models.BooleanField(null=False,blank=False,default=False)
     cashback_credited_once = models.BooleanField(null=False,blank=False,default=False)
-    marketing_fee_percentage = models.FloatField(null=False, blank=False, default=0)
+    commision_percentage = models.FloatField(null=False, blank=False, default=1.5)
     date_created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     def save(self, *args, **kwargs):
@@ -72,7 +72,7 @@ def update_cashback(created,instance):
         for vendor in before_vendors:
             vendor.after_sale_total = vendor.after_sale_total+instance.total_amount
             vendor.save()
-        instance.marketing_fee_percentage = instance.vendor.commission_percentage
+        instance.commision_percentage = instance.vendor.commission_percentage
         instance.save()
     else:
         all_cashback_levels = CashbackLevel.objects.all()
