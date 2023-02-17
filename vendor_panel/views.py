@@ -91,6 +91,27 @@ class MarketingFee(View):
         context = {'vendor': vendor,"alltransaction":alltransaction,"marketing_fee_pending":marketing_fee_pending}    
         return render(request,'vendor/marketing.html',context)
     
+    
+    def post(self, request):
+        try:
+            phone = request.session['phone']
+        except KeyError:
+            return redirect('vendor-login')  
+        try:
+            vendor = Vendor.objects.get(phone=phone)
+        except Vendor.DoesNotExist:
+            return redirect('vendor-logout')
+        
+        all_pending_sale = VendorSale.objects.filter(vendor=vendor,marketing_fee_paid=False)
+        marketing_fee_pending = 0
+        for pending_sale in all_pending_sale:
+            marketing_fee_pending = marketing_fee_pending + ((pending_sale.total_amount * pending_sale.commision_percentage)/100)
+        alltransaction = VedorCommissionsTransaction.objects.filter(vendor=vendor)
+        VedorCommissionsTransaction.objects.create(vendor=vendor,total_amount=marketing_fee_pending,sales=alltransaction)
+
+        context = {'vendor': vendor,"alltransaction":alltransaction,"marketing_fee_pending":marketing_fee_pending}    
+        return render(request,'vendor/marketing.html',context)
+    
 
 
         

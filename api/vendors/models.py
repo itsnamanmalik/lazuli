@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_save,post_delete
+from django.db.models.signals import post_save,post_delete, pre_save
 from django.dispatch import receiver
 from api.users.models import UserCashbackLevel
 from api.cashback.models import CashbackLevel
@@ -19,6 +19,7 @@ class Vendor(models.Model):
     wallet = models.FloatField(null=False, blank=False, default=0)
     gst_number = models.CharField(blank=True,null=True,max_length=50)
     commission_percentage = models.FloatField(null=False, blank=False, default=0)
+    credit_limit = models.FloatField(null=False, blank=False, default=100000)
     notification_id = models.CharField(max_length=500, default="",null=False, blank=True)
     date_joined	= models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_login = models.DateTimeField(auto_now=True,null=True, blank=True)
@@ -62,6 +63,7 @@ class VedorCommissionsTransaction(models.Model):
     payment_status =  models.CharField(max_length=10, choices=PAYMENT_STATUS, default='pending') 
     razorpay_order_id = models.CharField(blank=True,null=True,max_length=50)
     payment_id = models.CharField(blank=True,null=True,max_length=50)
+    sales = models.ManyToManyField(to='vendor.VendorSale')
     date_created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     
@@ -109,6 +111,10 @@ def update_cashback_level(sender, instance, created, **kwargs):
     th.join()
 
 
+    
+
+
+
 
 @receiver(post_delete, sender=VendorSale)
 def update_cashback_level_on_delete(sender, instance, **kwargs):
@@ -117,7 +123,34 @@ def update_cashback_level_on_delete(sender, instance, **kwargs):
     th.join()
     
         
-            
+
+
+@receiver(post_save, sender=VedorCommissionsTransaction)
+def update_commison(sender, instance, created, **kwargs):
+    if created:
+        for sale in instance.sales:
+            sale.marketing_fee_paid = True
+            sale.save()
+
+@receiver(pre_save, sender=VedorCommissionsTransaction)
+def update_commison_status(sender, instance, **kwargs):
+    try:
+        old_instance = VedorCommissionsTransaction.objects.get(id=instance.id)
+    except VedorCommissionsTransaction.DoesNotExist:
+        for sale in instance.sales:
+            sale.marketing_fee_paid = True
+            sale.save()
+        return None      
+        
+    if old_instance.status == 'failed' or old_instance.status == 'completed':
+        instance.status = old_instance.status
+        
+    if old_instance.status == 'pending' and instance.status == 'failed':
+        for sale in old_instance.sales:
+            sale.marketing_fee_paid = False
+            sale.save()
+        
+
 # TRANSACTION_TYPE = (
 #     ("debited", "debited"), 
 #     ("credited", "credited"), 
