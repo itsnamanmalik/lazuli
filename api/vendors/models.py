@@ -128,7 +128,7 @@ def update_cashback_level_on_delete(sender, instance, **kwargs):
 @receiver(post_save, sender=VedorCommissionsTransaction)
 def update_commison(sender, instance, created, **kwargs):
     if created:
-        for sale in instance.sales:
+        for sale in instance.sales.all():
             sale.marketing_fee_paid = True
             sale.save()
 
@@ -137,7 +137,7 @@ def update_commison_status(sender, instance, **kwargs):
     try:
         old_instance = VedorCommissionsTransaction.objects.get(id=instance.id)
     except VedorCommissionsTransaction.DoesNotExist:
-        for sale in instance.sales:
+        for sale in instance.sales.all():
             sale.marketing_fee_paid = True
             sale.save()
         return None      
@@ -146,7 +146,7 @@ def update_commison_status(sender, instance, **kwargs):
         instance.status = old_instance.status
         
     if old_instance.status == 'pending' and instance.status == 'failed':
-        for sale in old_instance.sales:
+        for sale in old_instance.sales.all():
             sale.marketing_fee_paid = False
             sale.save()
         
