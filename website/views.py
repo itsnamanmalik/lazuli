@@ -6,7 +6,7 @@ from api.ui.models import *
 from api.common.models import *
 from django.contrib import messages
 from django.shortcuts import redirect
-from api.users.models import User
+from api.users.models import User, UserWalletTransaction
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
@@ -114,7 +114,9 @@ class Account(View):
                 return redirect('login')       
         except KeyError:
             return redirect('login')
-        context = {'user':user}
+
+        all_transactions = UserWalletTransaction.objects.filter(user=user)
+        context = {'user':user,"all_transactions":all_transactions}
         return render(request,'account.html',context)
     def post(self, request):
         logout = request.POST.get('logout','false')

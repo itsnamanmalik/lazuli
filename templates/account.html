@@ -49,6 +49,29 @@
 
                     <div class="py-3 px-2 text-center text-danger d-none mt-4" id="wallet">
                         <span class="display-6"><span style="font-family: sans-serif">₹</span>{{user.wallet}}</span>
+
+                        <table class="table mt-4">
+                        <thead>
+                            <tr>
+                            <th scope="col">amount</th>
+                            <th scope="col">type</th>
+                            <th scope="col">remark</th>
+                            <th scope="col">date-time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for transaction in all_transactions %}
+                        <tr>
+                            <td>₹{{transaction.amount}}</td>
+                            <td>{{transaction.transaction_type}}</td>
+                            <td>{{transaction.paid_for}}</td>
+                            <td>{{transaction.time_date}}</td>
+                        </tr>
+                        {% endfor %}
+                          
+                        </tbody>
+                        </table>
                     </div>
 
                     {% comment %} <div class="py-3 pt-1 px-2 text-center d-none mt-4" id="addresses">
