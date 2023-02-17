@@ -7,6 +7,7 @@ from api.common.models import *
 from django.contrib import messages
 from django.shortcuts import redirect
 from api.users.models import User, UserWalletTransaction
+from api.vendors.models import VendorSale
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
@@ -116,7 +117,8 @@ class Account(View):
             return redirect('login')
 
         all_transactions = UserWalletTransaction.objects.filter(user=user).order_by('-time_date')
-        context = {'user':user,"all_transactions":all_transactions}
+        all_purchase = VendorSale.objects.filter(user=user).order_by('-date_created')
+        context = {'user':user,"all_transactions":all_transactions,"all_purchase":all_purchase}
         return render(request,'account.html',context)
     def post(self, request):
         logout = request.POST.get('logout','false')

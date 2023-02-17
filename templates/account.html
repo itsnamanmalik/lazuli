@@ -34,15 +34,15 @@
                             <i class="fas fa-user-edit ored fs-1 mx-2"></i><span href=""
                                 class="small text-dark fw-500 d-none d-md-block">Edit Profile</span>
                         </div>
-                        {% comment %} <div class="item px-2 d-flex py-2 justify-content-center align-items-center" role="button"
-                            id="item-2">
-                            <i class="fas fa-address-card blue fs-1 mx-2"></i><span href=""
-                                class="small text-dark fw-500 d-none d-md-block">My Addresses</span>
-                        </div> {% endcomment %}
                         <div class="item px-2 d-flex py-2 justify-content-center align-items-center"
                             role="button" id="item-1">
                             <i class="fas fa-wallet dblue fs-1 mx-2"></i><span href=""
                                 class="small text-dark fw-500 d-none d-md-block">My Wallet</span>
+                        </div>
+                        <div class="item px-2 d-flex py-2 justify-content-center align-items-center"
+                            role="button" id="item-2">
+                            <i class="fas fa-cart dblue fs-1 mx-2"></i><span href=""
+                                class="small text-dark fw-500 d-none d-md-block">My Purchase</span>
                         </div>
                         
                     </div>
@@ -159,6 +159,40 @@
                             </button>
                         </form>
                     </div>
+
+
+
+
+
+
+                    <div class="py-3 px-md-2 px-1 text-center mt-4 w-70 mx-auto overflow-auto" id="purchase">
+                        
+                         <table class="table mt-2">
+                        <thead>
+                            <tr>
+                            <th scope="col">vendor</th>
+                            <th scope="col">product</th>
+                            <th scope="col">amount</th>
+                            <th scope="col">cashback</th>
+                            <th scope="col">date-time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for purchase in all_purchase %}
+                        <tr>
+                            <td>{{purchase.vendor.business_name}}</td>
+                            <td>{{purchase.product_name}}</td>
+                            <td>₹{{purchase.total_amount}}</td>
+                            <td>{{purchase.cashback_given}}</td>
+                            <td>{{purchase.date_created}}</td>
+                        </tr>
+                        {% endfor %}
+                          
+                        </tbody>
+                        </table>
+
+                    </div>
                 </div>
             </div>
 
@@ -202,24 +236,42 @@
 // USER PROFILE
 var wallet = document.getElementById('wallet');
 var editProfile = document.getElementById('edit-profile');
+var purchase = document.getElementById('purchase');
 var item1 = document.getElementById('item-1');
 var item3 = document.getElementById('item-3');
+var item2 = document.getElementById('item-2');
 
 item1.addEventListener('click', () => {
-    console.log("click hua 1")
     wallet.classList.remove('d-none');
     editProfile.classList.add('d-none');
+    purchase.classList.add('d-none');
+
     item1.classList.add('border-bottom-gray');
+    item2.classList.remove('border-bottom-gray');
     item3.classList.remove('border-bottom-gray');
 });
 
 item3.addEventListener('click', () => {
-    console.log("click hua 2")
     wallet.classList.add('d-none');
     editProfile.classList.remove('d-none');
+    purchase.classList.add('d-none');
+
     item3.classList.add('border-bottom-gray');
     item1.classList.remove('border-bottom-gray');
+    item2.classList.remove('border-bottom-gray');
 });
+
+item2.addEventListener('click', () => {
+    wallet.classList.add('d-none');
+    editProfile.classList.add('d-none');
+    purchase.classList.remove('d-none');
+
+    item3.classList.remove('border-bottom-gray');
+    item1.classList.remove('border-bottom-gray');
+    item2.classList.add('border-bottom-gray');
+});
+
+
 </script>
 
 {% endblock body %}
