@@ -63,7 +63,7 @@ class VedorCommissionsTransaction(models.Model):
     payment_status =  models.CharField(max_length=10, choices=PAYMENT_STATUS, default='pending') 
     razorpay_order_id = models.CharField(blank=True,null=True,max_length=50)
     payment_id = models.CharField(blank=True,null=True,max_length=50)
-    sales = models.ManyToManyField(to='vendor.VendorSale')
+    sales = models.ManyToManyField(to='vendors.VendorSale')
     date_created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
     last_edited = models.DateTimeField(auto_now=True,null=True, blank=True)
     
@@ -141,7 +141,7 @@ def update_commison_status(sender, instance, **kwargs):
             sale.marketing_fee_paid = True
             sale.save()
         return None      
-        
+
     if old_instance.status == 'failed' or old_instance.status == 'completed':
         instance.status = old_instance.status
         
