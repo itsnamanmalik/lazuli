@@ -115,7 +115,7 @@ class Account(View):
         except KeyError:
             return redirect('login')
 
-        all_transactions = UserWalletTransaction.objects.filter(user=user)
+        all_transactions = UserWalletTransaction.objects.filter(user=user).order_by('-time_date')
         context = {'user':user,"all_transactions":all_transactions}
         return render(request,'account.html',context)
     def post(self, request):
