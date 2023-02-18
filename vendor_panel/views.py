@@ -270,6 +270,7 @@ class AddSales(View):
 
             if marketing_fee_pending>vendor.credit_limit:
                 messages.error(request,"Please pay pending marketing fee to continue!!")    
+                return redirect('marketing-fee')
             else:
                 vendor_sales = VendorSale(user=user, vendor=vendor,product_name=product_name,total_amount=amount)
                 vendor_sales.save()    
