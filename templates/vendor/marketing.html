@@ -39,10 +39,9 @@
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <form method="post">
-                {% csrf_token %}
-                <button type="submit" class="small-box-footer">Pay Now <i class="fas fa-arrow-circle-right"></i></button>
-                </form>
+
+                <a class="small-box-footer" href="{% url 'pay-marketing-fee' %}">Pay Now <i class="fas fa-arrow-circle-right"></i></a>
+
             </div>
 
             {% else %}

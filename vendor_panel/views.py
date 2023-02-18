@@ -92,7 +92,9 @@ class MarketingFee(View):
         return render(request,'vendor/marketing.html',context)
     
     
-    def post(self, request):
+       
+class PayMarketingFee(View):
+    def get(self, request):
         try:
             phone = request.session['phone']
         except KeyError:
@@ -106,24 +108,14 @@ class MarketingFee(View):
         marketing_fee_pending = 0
         for pending_sale in all_pending_sale:
             marketing_fee_pending = marketing_fee_pending + ((pending_sale.total_amount * pending_sale.commision_percentage)/100)
-        alltransaction = VedorCommissionsTransaction.objects.filter(vendor=vendor)
-        
+
         commision = VedorCommissionsTransaction.objects.create(vendor=vendor,total_amount=marketing_fee_pending)
         commision.sales.set(all_pending_sale)
         commision.save()
 
-        all_pending_sale = VendorSale.objects.filter(vendor=vendor,marketing_fee_paid=False)
-        marketing_fee_pending = 0
-        for pending_sale in all_pending_sale:
-            marketing_fee_pending = marketing_fee_pending + ((pending_sale.total_amount * pending_sale.commision_percentage)/100)
-        alltransaction = VedorCommissionsTransaction.objects.filter(vendor=vendor)
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
-        context = {'vendor': vendor,"alltransaction":alltransaction,"marketing_fee_pending":marketing_fee_pending}    
-        return render(request,'vendor/marketing.html',context)
-    
-
-
-        
+            
         
 class MyProfile(View):
     def get(self, request):
