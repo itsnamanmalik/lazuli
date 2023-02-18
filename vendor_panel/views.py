@@ -107,8 +107,16 @@ class MarketingFee(View):
         for pending_sale in all_pending_sale:
             marketing_fee_pending = marketing_fee_pending + ((pending_sale.total_amount * pending_sale.commision_percentage)/100)
         alltransaction = VedorCommissionsTransaction.objects.filter(vendor=vendor)
+        
         commision = VedorCommissionsTransaction.objects.create(vendor=vendor,total_amount=marketing_fee_pending)
-        commision.sales.set(alltransaction)
+        commision.sales.set(all_pending_sale)
+        commision.save()
+
+        all_pending_sale = VendorSale.objects.filter(vendor=vendor,marketing_fee_paid=False)
+        marketing_fee_pending = 0
+        for pending_sale in all_pending_sale:
+            marketing_fee_pending = marketing_fee_pending + ((pending_sale.total_amount * pending_sale.commision_percentage)/100)
+        alltransaction = VedorCommissionsTransaction.objects.filter(vendor=vendor)
 
         context = {'vendor': vendor,"alltransaction":alltransaction,"marketing_fee_pending":marketing_fee_pending}    
         return render(request,'vendor/marketing.html',context)
