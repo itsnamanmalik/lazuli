@@ -259,10 +259,21 @@ class AddSales(View):
             except User.DoesNotExist:
                 user = User(phone=user_phone, name=name, email=email)
                 user.save()
-            vendor_sales = VendorSale(user=user, vendor=vendor,product_name=product_name,total_amount=amount)
-            vendor_sales.save()
-                    
-            messages.success(request,"Sales Added Successfully!!")
+
+            all_pending_sale = VendorSale.objects.filter(vendor=vendor,marketing_fee_paid=False)
+
+            marketing_fee_pending = 0
+            for pending_sale in all_pending_sale:
+                marketing_fee_pending = marketing_fee_pending + ((pending_sale.total_amount * pending_sale.commision_percentage)/100)
+                
+            marketing_fee_pending = marketing_fee_pending + ((amount * vendor.commission_percentage)/100)
+
+            if marketing_fee_pending>vendor.credit_limit:
+                messages.error(request,"Please pay pending marketing fee to continue!!")    
+            else:
+                vendor_sales = VendorSale(user=user, vendor=vendor,product_name=product_name,total_amount=amount)
+                vendor_sales.save()    
+                messages.success(request,"Sales Added Successfully!!")
             return redirect('sales')
         messages.error(request,"Some error occured!!")
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

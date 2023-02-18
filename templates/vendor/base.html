@@ -233,7 +233,11 @@
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="{% static 'vendor/dash/js/pages/dashboard.js' %}"></script>
 
-
+  <script>
+      if ( window.history.replaceState ) {
+          window.history.replaceState( null, null, window.location.href );
+      }
+  </script>
 
   {% block extrajs %}
   {% endblock extrajs %}
